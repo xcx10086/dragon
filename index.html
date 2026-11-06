@@ -3,40 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>珀莱雅 深海焕能紧致面霜 | PROYA</title>
-<meta name="description" content="珀莱雅深海焕能紧致面霜，深海修护成分，抗老紧致，保湿提亮，适合多种肤质。">
-
-<!-- Font Awesome 图标库 -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-<!-- Google Fonts: Cormorant Garamond 优雅衬线体（英文装饰） -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
-
+<title>《龙之谷》十五周年 · 黎明远征 | 活动介绍页</title>
+<meta name="description" content="《龙之谷》十五周年「黎明远征」版本活动介绍页：限时活动入口、资料片福利、客户端下载与活动倒计时。">
+<meta name="theme-color" content="#05060a">
+<meta name="color-scheme" content="dark">
 <style>
 /* ============================================================
-   珀莱雅 深海焕能紧致面霜 — 推广单页样式
-   设计主色：深海蓝 #0a3d62 / #1a5a8a · 珍珠白 #fafcfe · 金色 #c9a96e
+   《龙之谷》活动介绍页 — 单文件静态页（零构建 / 零外链 / 零第三方运行时）
+   美术基准：https://dn.web.sdo.com/web12/ 暗色哥特奇幻风
+   结构：顶部导航 → 主视觉 KV → 活动入口 → 资料片/福利 → 视频弹窗 → 页脚
    ============================================================ */
 
 /* ---------- 设计令牌 ---------- */
 :root{
-  --deep:#0a3d62;          /* 深海蓝 */
-  --deep-2:#1a5a8a;        /* 中海蓝 */
-  --deep-3:#2c7fb8;        /* 亮海蓝 */
-  --pearl:#fafcfe;         /* 珍珠白 */
-  --pearl-2:#f0f4f8;       /* 浅灰白 */
-  --gold:#c9a96e;          /* 金色 */
-  --gold-2:#b8945a;        /* 深金 */
-  --ink:#1a2b3c;           /* 主文字 */
-  --ink-2:#4a5d70;         /* 次文字 */
-  --line:rgba(10,61,98,.12);
-  --shadow:0 10px 40px rgba(10,61,98,.08);
-  --shadow-lg:0 20px 60px rgba(10,61,98,.14);
-  --serif:'Cormorant Garamond',Georgia,serif;
-  --sans:'Noto Sans SC','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;
+  --bg-0:#05060a;                 /* 最深底 */
+  --bg-1:#121019;                 /* 深紫黑 */
+  --bg-2:#1a1722;                 /* 面板底 */
+  --gold:#d8b46a;                 /* 主强调金 */
+  --gold-hi:#f2dfa9;              /* 高光金 */
+  --gold-deep:#8a6a2e;            /* 暗金（描边收口） */
+  --blood:#7d1f12;                /* 暗红点缀 */
+  --text:#cfc7b8;                 /* 正文 */
+  --text-dim:#8d8677;             /* 弱化文字 */
+  --line:rgba(216,180,106,.22);   /* 金线 */
+  --glass:rgba(8,8,12,.62);       /* 半透明浮层 */
+  --serif:"Times New Roman",Georgia,"Songti SC",serif;
+  --sans:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
   --maxw:1200px;
+  --glow:0 0 18px rgba(216,180,106,.28);
 }
 
 /* ---------- 重置 ---------- */
@@ -44,727 +38,1037 @@
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{
   font-family:var(--sans);
-  color:var(--ink);
-  background:var(--pearl);
+  color:var(--text);
+  background:var(--bg-0);
   line-height:1.7;
   overflow-x:hidden;
-  font-weight:300;
+  font-weight:400;
+  -webkit-font-smoothing:antialiased;
 }
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
-button{font-family:inherit;cursor:pointer;border:none;background:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
 
-/* 通用容器 */
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
 .serif{font-family:var(--serif)}
 
-/* ---------- 通用淡入动画（IntersectionObserver 触发） ---------- */
-.reveal{opacity:0;transform:translateY(40px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+/* ---------- 通用淡入（IntersectionObserver 触发） ---------- */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
 .reveal.show{opacity:1;transform:none}
-.reveal.d1{transition-delay:.12s}
-.reveal.d2{transition-delay:.24s}
-.reveal.d3{transition-delay:.36s}
-.reveal.d4{transition-delay:.48s}
+.reveal.d1{transition-delay:.1s}
+.reveal.d2{transition-delay:.2s}
+.reveal.d3{transition-delay:.3s}
+.reveal.d4{transition-delay:.4s}
 
 /* ============================================================
-   1. 顶部导航
+   1. 顶部固定导航
    ============================================================ */
 .nav{
   position:fixed;top:0;left:0;right:0;z-index:100;
-  transition:background .4s,box-shadow .4s,padding .4s;
-  padding:22px 0;
+  padding:20px 0;
+  background:linear-gradient(180deg,rgba(5,6,10,.82),rgba(5,6,10,0));
+  transition:background .45s,box-shadow .45s,padding .45s,backdrop-filter .45s;
 }
-.nav.scrolled{background:rgba(250,252,254,.92);backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--line);padding:14px 0}
-.nav .wrap{display:flex;align-items:center;justify-content:space-between}
-.nav .brand{display:flex;align-items:baseline;gap:10px;color:#fff;transition:color .4s}
-.nav.scrolled .brand{color:var(--deep)}
-.nav .brand .cn{font-size:22px;font-weight:500;letter-spacing:2px}
-.nav .brand .en{font-family:var(--serif);font-size:15px;letter-spacing:3px;opacity:.8}
-.nav .links{display:flex;gap:36px;align-items:center}
-.nav .links a{color:rgba(255,255,255,.9);font-size:14px;letter-spacing:1px;transition:color .3s;position:relative}
-.nav.scrolled .links a{color:var(--ink-2)}
-.nav .links a:hover{color:var(--gold)}
-.nav .links a::after{content:'';position:absolute;left:0;bottom:-6px;width:0;height:1px;background:var(--gold);transition:width .3s}
-.nav .links a:hover::after{width:100%}
-.nav-burger{display:none;font-size:22px;color:#fff}
-.nav.scrolled .nav-burger{color:var(--deep)}
+.nav.scrolled{
+  padding:12px 0;
+  background:rgba(5,6,10,.86);
+  -webkit-backdrop-filter:blur(14px);
+  backdrop-filter:blur(14px);
+  box-shadow:0 1px 0 var(--line),0 12px 34px rgba(0,0,0,.55);
+}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.nav .brand{display:flex;align-items:center;gap:12px}
+.brand-mark{width:38px;height:38px;flex:none;filter:drop-shadow(0 0 8px rgba(216,180,106,.4))}
+.nav .brand .cn{font-size:23px;font-weight:700;letter-spacing:3px;color:var(--gold-hi);text-shadow:0 0 14px rgba(216,180,106,.4),0 2px 6px #000}
+.nav .brand .en{font-family:var(--serif);font-size:12px;letter-spacing:4px;color:var(--text-dim);display:block;margin-top:-4px}
+.nav .links{display:flex;gap:34px;align-items:center}
+.nav .links a{font-size:14px;letter-spacing:2px;color:rgba(207,199,184,.86);position:relative;transition:color .3s,text-shadow .3s}
+.nav .links a:hover{color:var(--gold-hi);text-shadow:var(--glow)}
+.nav .links a::after{content:'';position:absolute;left:50%;right:50%;bottom:-7px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transition:left .35s,right .35s}
+.nav .links a:hover::after{left:0;right:0}
+.nav-tools{display:flex;align-items:center;gap:14px}
+/* 音乐开关 */
+.music-btn{
+  display:inline-flex;align-items:center;gap:9px;
+  padding:8px 14px;border:1px solid var(--line);
+  background:rgba(216,180,106,.06);
+  font-size:12.5px;letter-spacing:1.5px;color:var(--text-dim);
+  transition:border-color .3s,color .3s,box-shadow .3s;min-height:36px;
+}
+.music-btn:hover{border-color:var(--gold);color:var(--gold-hi);box-shadow:var(--glow)}
+.music-btn[aria-pressed="true"]{border-color:var(--gold);color:var(--gold-hi);box-shadow:var(--glow)}
+.eq{display:inline-flex;align-items:flex-end;gap:2px;height:14px;width:16px}
+.eq i{width:2px;height:4px;background:var(--gold);display:block;transition:height .3s}
+.music-btn[aria-pressed="true"] .eq i:nth-child(1){height:12px;animation:eqPulse .9s ease-in-out infinite}
+.music-btn[aria-pressed="true"] .eq i:nth-child(2){height:8px;animation:eqPulse 1.2s ease-in-out infinite .1s}
+.music-btn[aria-pressed="true"] .eq i:nth-child(3){height:14px;animation:eqPulse .7s ease-in-out infinite .2s}
+.music-btn[aria-pressed="true"] .eq i:nth-child(4){height:6px;animation:eqPulse 1.05s ease-in-out infinite .15s}
+@keyframes eqPulse{0%,100%{transform:scaleY(.4)}50%{transform:scaleY(1)}}
+.nav-burger{display:none;width:40px;height:40px;align-items:center;justify-content:center;border:1px solid var(--line);color:var(--gold)}
 
 /* ============================================================
-   2. Hero 首屏
+   2. 主视觉 Hero / KV
    ============================================================ */
 .hero{
   position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;
-  background:linear-gradient(135deg,#0a3d62 0%,#1a5a8a 45%,#2c7fb8 100%);
-  overflow:hidden;text-align:center;color:#fff;
+  text-align:center;overflow:hidden;isolation:isolate;
 }
-/* Hero 背景图（Unsplash 海洋）+ 渐变蒙层 */
-.hero::before{
+/* KV 轮播：三层叠图交叉淡入（纯 CSS 渐变 + 光斑，无外链素材） */
+.kv{position:absolute;inset:0;opacity:0;transform:scale(1.06);transition:opacity 1.6s ease}
+.kv.active{opacity:1}
+.kv-1{background:
+  radial-gradient(ellipse at 50% 32%,rgba(72,86,150,.55) 0%,rgba(20,18,40,.85) 46%,rgba(5,6,10,1) 78%),
+  radial-gradient(circle at 18% 74%,rgba(216,180,106,.22) 0%,transparent 42%),
+  linear-gradient(160deg,#121019 0%,#05060a 100%)}
+.kv-2{background:
+  radial-gradient(ellipse at 62% 26%,rgba(125,31,18,.5) 0%,rgba(30,16,22,.9) 50%,rgba(5,6,10,1) 80%),
+  radial-gradient(circle at 82% 70%,rgba(242,223,169,.16) 0%,transparent 40%),
+  linear-gradient(200deg,#160f14 0%,#05060a 100%)}
+.kv-3{background:
+  radial-gradient(ellipse at 45% 38%,rgba(30,84,86,.5) 0%,rgba(16,24,26,.9) 52%,rgba(5,6,10,1) 82%),
+  radial-gradient(circle at 24% 30%,rgba(216,180,106,.18) 0%,transparent 46%),
+  linear-gradient(150deg,#0d1416 0%,#05060a 100%)}
+.kv::after{
   content:'';position:absolute;inset:0;
-  background:url('https://images.unsplash.com/photo-1559825481-12a05cc00344?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
-  opacity:.45;
+  background:
+    radial-gradient(circle at 50% 46%,transparent 0%,rgba(5,6,10,.55) 62%,rgba(5,6,10,.96) 100%),
+    repeating-linear-gradient(0deg,rgba(255,255,255,.02) 0 1px,transparent 1px 3px);
 }
-.hero::after{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse at 50% 40%,transparent 0%,rgba(10,61,98,.5) 100%);
+/* 漂浮光粒 */
+.sparks{
+  position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.55;
+  background-image:
+    radial-gradient(circle,rgba(242,223,169,.9) 0 1px,transparent 1.6px),
+    radial-gradient(circle,rgba(216,180,106,.7) 0 1px,transparent 1.8px),
+    radial-gradient(circle,rgba(255,255,255,.5) 0 1px,transparent 1.4px);
+  background-size:220px 220px,340px 340px,470px 470px;
+  background-position:0 0,60px 120px,140px 40px;
+  animation:sparkDrift 24s linear infinite;
 }
-.hero-inner{position:relative;z-index:2;padding:0 24px;max-width:900px}
+@keyframes sparkDrift{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(-60px,-220px,0)}}
+.hero-inner{position:relative;z-index:3;padding:0 24px;max-width:940px}
 .hero .eyebrow{
-  font-family:var(--serif);font-size:clamp(15px,2.4vw,20px);letter-spacing:6px;text-transform:uppercase;
-  color:var(--gold);margin-bottom:24px;opacity:0;animation:fadeUp 1s .3s forwards;
+  font-family:var(--serif);font-size:clamp(13px,1.6vw,17px);letter-spacing:.42em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:26px;opacity:0;animation:fadeUp 1s .25s forwards;
 }
+.hero .eyebrow::before,.hero .eyebrow::after{content:'';display:inline-block;width:36px;height:1px;background:linear-gradient(90deg,transparent,var(--gold));vertical-align:middle;margin:0 14px}
+.hero .eyebrow::after{background:linear-gradient(90deg,var(--gold),transparent)}
+/* 描金厚涂标题：渐变填充 + 描边 + 双层光晕/投影 */
 .hero h1{
-  font-size:clamp(38px,7vw,76px);font-weight:300;line-height:1.2;letter-spacing:4px;margin-bottom:10px;
-  opacity:0;animation:fadeUp 1s .5s forwards;
+  font-size:clamp(44px,8.6vw,118px);font-weight:900;line-height:1.08;letter-spacing:.1em;
+  margin-bottom:14px;opacity:0;animation:fadeUp 1s .45s forwards;
+  color:var(--gold-hi);
+  -webkit-text-stroke:1.5px rgba(242,223,169,.85);
+  text-shadow:
+    0 0 12px rgba(242,223,169,.35),
+    0 0 46px rgba(216,180,106,.32),
+    0 5px 0 rgba(10,6,2,.85),
+    0 22px 48px rgba(0,0,0,.9);
 }
-.hero h1 .em{font-family:var(--serif);font-style:italic;font-weight:500;color:var(--gold)}
+@supports ((-webkit-background-clip:text) or (background-clip:text)){
+  .hero h1{
+    background:linear-gradient(178deg,#fdf6dc 0%,#f2dfa9 26%,#d8b46a 56%,#8a6a2e 74%,#f2dfa9 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+}
+.hero h1 .em{display:inline-block;color:var(--gold-hi)}
+.hero .activity-name{
+  font-size:clamp(17px,2.4vw,25px);font-weight:400;letter-spacing:.28em;color:var(--text);
+  opacity:0;animation:fadeUp 1s .62s forwards;
+}
+.hero .activity-name span{color:var(--gold-hi);text-shadow:var(--glow)}
 .hero .slogan{
-  font-size:clamp(16px,2.4vw,21px);font-weight:300;letter-spacing:3px;opacity:.9;margin-bottom:44px;
-  opacity:0;animation:fadeUp 1s .7s forwards;
+  margin:22px auto 0;max-width:620px;font-size:clamp(13px,1.5vw,16px);letter-spacing:.14em;
+  color:var(--text-dim);opacity:0;animation:fadeUp 1s .74s forwards;
 }
-.hero .cta-group{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp 1s .9s forwards}
+/* 活动期标尺 */
+.hero .period{
+  display:inline-flex;align-items:center;gap:12px;margin-top:24px;padding:7px 20px;
+  border:1px solid var(--line);background:rgba(216,180,106,.05);
+  font-family:var(--serif);font-size:13px;letter-spacing:.18em;color:var(--gold);
+  opacity:0;animation:fadeUp 1s .8s forwards;
+}
+.hero .period b{font-weight:400;color:var(--text-dim)}
+.hero .cta-group{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-top:40px;opacity:0;animation:fadeUp 1s .92s forwards}
+
+/* 描金斜角按钮 */
 .btn{
-  display:inline-flex;align-items:center;gap:10px;
-  padding:16px 40px;font-size:15px;letter-spacing:2px;border-radius:50px;
-  transition:all .35s cubic-bezier(.2,.7,.2,1);position:relative;overflow:hidden;
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  padding:16px 42px;font-size:15px;letter-spacing:.16em;position:relative;
+  clip-path:polygon(12px 0,100% 0,calc(100% - 12px) 100%,0 100%);
+  transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s,background .35s,color .35s;
+  min-height:48px;
 }
-.btn-primary{background:var(--gold);color:#fff;box-shadow:0 8px 28px rgba(201,169,110,.45)}
-.btn-primary:hover{background:var(--gold-2);transform:translateY(-3px);box-shadow:0 14px 36px rgba(201,169,110,.55)}
-.btn-ghost{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.4);backdrop-filter:blur(6px)}
-.btn-ghost:hover{background:rgba(255,255,255,.2);transform:translateY(-3px)}
-.hero .scroll-hint{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);z-index:2;color:rgba(255,255,255,.7);font-size:13px;letter-spacing:2px;display:flex;flex-direction:column;align-items:center;gap:8px}
-.hero .scroll-hint .line{width:1px;height:40px;background:rgba(255,255,255,.5);animation:scrollLine 2s ease-in-out infinite}
-@keyframes fadeUp{to{opacity:1;transform:translateY(0)}from{opacity:0;transform:translateY(30px)}}
-@keyframes scrollLine{0%,100%{transform:scaleY(.4);opacity:.5}50%{transform:scaleY(1);opacity:1}}
-
-/* ============================================================
-   3. 核心卖点区
-   ============================================================ */
-.section{padding:110px 0}
-.section-head{text-align:center;margin-bottom:70px}
-.section-head .kicker{font-family:var(--serif);font-size:16px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
-.section-head h2{font-size:clamp(28px,4vw,40px);font-weight:300;letter-spacing:3px;color:var(--deep)}
-.section-head h2 .em{font-family:var(--serif);font-style:italic;color:var(--gold-2)}
-.section-head .desc{margin-top:18px;color:var(--ink-2);font-size:15px;max-width:560px;margin-left:auto;margin-right:auto}
-
-.features{display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
-.feature-card{
-  background:#fff;border-radius:20px;padding:46px 28px;text-align:center;
-  box-shadow:var(--shadow);border:1px solid var(--line);
-  transition:transform .4s cubic-bezier(.2,.7,.2,1),box-shadow .4s;
+.btn-gold{
+  color:#150f08;font-weight:700;
+  background:linear-gradient(180deg,#f7ecc4,#d8b46a 52%,#a9832f 100%);
+  box-shadow:0 0 0 1px rgba(242,223,169,.85) inset,0 8px 26px rgba(216,180,106,.34),0 0 34px rgba(216,180,106,.22);
 }
-.feature-card:hover{transform:translateY(-10px);box-shadow:var(--shadow-lg)}
-.feature-card .icon{
-  width:74px;height:74px;margin:0 auto 26px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;font-size:30px;
-  background:linear-gradient(135deg,var(--deep),var(--deep-2));color:#fff;
-  box-shadow:0 8px 22px rgba(10,61,98,.22);
+.btn-gold:hover{transform:translateY(-3px);box-shadow:0 0 0 1px #f2dfa9 inset,0 12px 34px rgba(216,180,106,.5),0 0 52px rgba(216,180,106,.4)}
+.btn-outline{
+  color:var(--gold-hi);background:rgba(216,180,106,.06);
+  box-shadow:0 0 0 1px rgba(216,180,106,.5) inset,0 0 18px rgba(216,180,106,.12);
 }
-.feature-card h3{font-size:20px;font-weight:500;color:var(--deep);margin-bottom:12px;letter-spacing:1px}
-.feature-card p{font-size:14px;color:var(--ink-2);line-height:1.8}
+.btn-outline:hover{color:#fff;background:rgba(216,180,106,.16);box-shadow:0 0 0 1px var(--gold) inset,0 0 30px rgba(216,180,106,.3);transform:translateY(-3px)}
+.btn-play{padding:16px 34px}
+.btn-play .ico{width:16px;height:16px;display:inline-block}
 
-/* ============================================================
-   4. 成分科技区（图文左右）
-   ============================================================ */
-.tech{background:linear-gradient(180deg,var(--pearl-2),var(--pearl))}
-.tech-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
-.tech-img{position:relative;border-radius:24px;overflow:hidden;box-shadow:var(--shadow-lg);aspect-ratio:4/5}
-.tech-img img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s}
-.tech-img:hover img{transform:scale(1.05)}
-.tech-img .badge{
-  position:absolute;top:24px;left:24px;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);
-  border-radius:50px;padding:10px 20px;font-size:13px;letter-spacing:1px;color:var(--deep);font-weight:500
+/* 轮播指示 + 滚动提示 */
+.kv-dots{position:absolute;left:50%;transform:translateX(-50%);bottom:96px;z-index:4;display:flex;gap:12px}
+.kv-dots button{width:26px;height:26px;display:flex;align-items:center;justify-content:center}
+.kv-dots button::after{content:'';width:8px;height:8px;transform:rotate(45deg);border:1px solid rgba(216,180,106,.55);background:transparent;transition:all .35s}
+.kv-dots button.active::after{background:var(--gold);border-color:var(--gold-hi);box-shadow:0 0 12px rgba(216,180,106,.8);transform:rotate(45deg) scale(1.15)}
+.scroll-hint{
+  position:absolute;bottom:34px;left:50%;transform:translateX(-50%);z-index:4;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  font-family:var(--serif);font-size:11px;letter-spacing:.34em;color:rgba(207,199,184,.6)
 }
-.tech-content .kicker{font-family:var(--serif);font-size:15px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
-.tech-content h2{font-size:clamp(26px,3.6vw,38px);font-weight:300;color:var(--deep);line-height:1.4;margin-bottom:24px;letter-spacing:2px}
-.tech-content h2 .em{font-family:var(--serif);font-style:italic;color:var(--gold-2)}
-.tech-content .lead{font-size:16px;color:var(--ink-2);line-height:1.9;margin-bottom:30px}
-.tech-list{list-style:none;display:flex;flex-direction:column;gap:18px;margin-bottom:34px}
-.tech-list li{display:flex;gap:16px;align-items:flex-start}
-.tech-list li .dot{flex:none;width:36px;height:36px;border-radius:10px;background:rgba(10,61,98,.08);color:var(--deep);display:flex;align-items:center;justify-content:center;font-size:15px}
-.tech-list li .t strong{display:block;font-size:15px;color:var(--deep);font-weight:500;margin-bottom:4px}
-.tech-list li .t span{font-size:14px;color:var(--ink-2);line-height:1.7}
-.tech-content .btn-link{display:inline-flex;align-items:center;gap:10px;color:var(--gold-2);font-size:14px;letter-spacing:1px;border-bottom:1px solid var(--gold-2);padding-bottom:4px;transition:gap .3s}
-.tech-content .btn-link:hover{gap:16px}
+.scroll-hint .line{width:1px;height:44px;background:linear-gradient(180deg,var(--gold),transparent);animation:scrollLine 2.2s ease-in-out infinite}
+@keyframes scrollLine{0%,100%{transform:scaleY(.35);opacity:.45;transform-origin:top}50%{transform:scaleY(1);opacity:1;transform-origin:top}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
 
 /* ============================================================
-   5. 使用效果区
+   3. 活动入口 + 倒计时
    ============================================================ */
-.effect-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
-.effect-visual{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.effect-visual .pic{position:relative;border-radius:18px;overflow:hidden;aspect-ratio:3/4;box-shadow:var(--shadow)}
-.effect-visual .pic img{width:100%;height:100%;object-fit:cover}
-.effect-visual .pic .tag{position:absolute;bottom:14px;left:14px;background:rgba(255,255,255,.92);padding:6px 14px;border-radius:50px;font-size:12px;letter-spacing:1px;color:var(--deep);font-weight:500}
-.effect-stats .stat{margin-bottom:34px}
-.effect-stats .stat:last-child{margin-bottom:0}
-.effect-stats .stat .label{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
-.effect-stats .stat .label .name{font-size:14px;color:var(--ink-2);letter-spacing:1px}
-.effect-stats .stat .label .num{font-family:var(--serif);font-size:30px;font-weight:600;color:var(--deep)}
-.effect-stats .stat .label .num .pct{font-size:16px;color:var(--gold-2);margin-left:2px}
-.bar{height:8px;background:var(--pearl-2);border-radius:50px;overflow:hidden}
-.bar .fill{height:100%;border-radius:50px;background:linear-gradient(90deg,var(--deep),var(--deep-3));width:0;transition:width 1.4s cubic-bezier(.2,.7,.2,1)}
-.effect-note{margin-top:20px;font-size:12px;color:var(--ink-2);opacity:.7;letter-spacing:.5px}
+.section{padding:110px 0;position:relative}
+.section-head{text-align:center;margin-bottom:64px}
+.section-head .kicker{font-family:var(--serif);font-size:13px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.section-head .kicker::before,.section-head .kicker::after{content:'';display:inline-block;width:28px;height:1px;background:var(--line);vertical-align:middle;margin:0 14px}
+.section-head h2{font-size:clamp(28px,4vw,42px);font-weight:700;letter-spacing:.14em;color:var(--gold-hi);text-shadow:0 0 16px rgba(216,180,106,.28),0 6px 18px rgba(0,0,0,.7)}
+.section-head h2 .em{color:var(--gold)}
+.section-head .desc{margin-top:16px;color:var(--text-dim);font-size:14.5px;letter-spacing:.06em;max-width:600px;margin-left:auto;margin-right:auto}
+
+.activities{background:linear-gradient(180deg,var(--bg-0) 0%,var(--bg-1) 42%,var(--bg-0) 100%)}
+.activity-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.activity-card{
+  position:relative;padding:36px 24px 30px;text-align:center;
+  background:var(--glass);
+  border:1px solid var(--line);
+  -webkit-backdrop-filter:blur(12px);
+  backdrop-filter:blur(12px);
+  transition:transform .45s cubic-bezier(.2,.7,.2,1),box-shadow .45s,border-color .45s;
+}
+@supports not ((-webkit-backdrop-filter:blur(12px)) or (backdrop-filter:blur(12px))){
+  .activity-card{background:#0c0b11}
+}
+.activity-card::before,.activity-card::after{
+  content:'';position:absolute;width:16px;height:16px;border:1px solid rgba(216,180,106,.6);transition:border-color .4s
+}
+.activity-card::before{top:8px;left:8px;border-right:none;border-bottom:none}
+.activity-card::after{bottom:8px;right:8px;border-left:none;border-top:none}
+.activity-card:hover{transform:translateY(-8px);border-color:var(--gold);box-shadow:0 20px 46px rgba(0,0,0,.62),0 0 30px rgba(216,180,106,.18)}
+.activity-card:hover::before,.activity-card:hover::after{border-color:var(--gold-hi)}
+.activity-card .badge{
+  position:absolute;top:-1px;right:18px;padding:5px 12px;font-size:11px;letter-spacing:.12em;
+  background:linear-gradient(180deg,var(--blood),#4d1109);color:#f4d9c8;
+  box-shadow:0 6px 18px rgba(125,31,18,.5)
+}
+.activity-card .ico{width:64px;height:64px;margin:6px auto 22px;display:flex;align-items:center;justify-content:center;position:relative}
+.activity-card .ico svg{width:40px;height:40px;color:var(--gold);filter:drop-shadow(0 0 10px rgba(216,180,106,.45))}
+.activity-card .ico::after{content:'';position:absolute;inset:0;border:1px solid rgba(216,180,106,.28);transform:rotate(45deg)}
+.activity-card h3{font-size:18.5px;font-weight:700;letter-spacing:.1em;color:var(--gold-hi);margin-bottom:8px}
+.activity-card .time{font-family:var(--serif);font-size:12.5px;letter-spacing:.14em;color:var(--gold);opacity:.9;margin-bottom:12px}
+.activity-card p{font-size:13.5px;color:var(--text-dim);line-height:1.85;min-height:76px}
+.activity-card .act-btn{
+  display:inline-flex;align-items:center;gap:8px;margin-top:8px;padding:10px 22px;
+  font-size:13px;letter-spacing:.14em;color:var(--gold);
+  border:1px solid rgba(216,180,106,.4);transition:all .35s;min-height:44px
+}
+.activity-card .act-btn:hover{color:#150f08;background:linear-gradient(180deg,#f7ecc4,#d8b46a);border-color:var(--gold-hi);box-shadow:0 0 24px rgba(216,180,106,.4)}
+
+/* 倒计时面板 */
+.countdown-panel{
+  margin-top:56px;padding:34px 40px;display:flex;align-items:center;justify-content:space-between;gap:36px;flex-wrap:wrap;
+  border:1px solid var(--line);
+  background:
+    radial-gradient(ellipse at 0% 50%,rgba(216,180,106,.1),transparent 55%),
+    var(--glass);
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  box-shadow:0 0 0 1px rgba(216,180,106,.08) inset,0 22px 50px rgba(0,0,0,.5)
+}
+@supports not ((-webkit-backdrop-filter:blur(12px)) or (backdrop-filter:blur(12px))){
+  .countdown-panel{background:#0c0b11}
+}
+.countdown-panel .cd-title{display:flex;flex-direction:column;gap:6px}
+.countdown-panel .cd-title .k{font-family:var(--serif);font-size:12px;letter-spacing:.3em;color:var(--gold)}
+.countdown-panel .cd-title .t{font-size:20px;font-weight:700;letter-spacing:.12em;color:var(--gold-hi)}
+.countdown-panel .cd-title .s{font-size:12.5px;color:var(--text-dim);letter-spacing:.08em}
+.countdown{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.cd-cell{min-width:84px;padding:12px 10px;text-align:center;border:1px solid rgba(216,180,106,.28);background:rgba(5,6,10,.55)}
+.cd-cell .num{font-family:var(--serif);font-size:34px;line-height:1.1;color:var(--gold-hi);text-shadow:0 0 16px rgba(216,180,106,.42)}
+.cd-cell .unit{font-size:11px;letter-spacing:.22em;color:var(--text-dim);margin-top:4px}
+.cd-sep{font-family:var(--serif);font-size:26px;color:var(--gold);opacity:.6;transform:translateY(-8px)}
+.countdown.is-over .cd-cell .num{font-size:22px;letter-spacing:.1em;color:var(--text-dim)}
 
 /* ============================================================
-   6. 用户评价区
+   4. 资料片 / 福利（图文左右）
    ============================================================ */
-.reviews{background:var(--deep);color:#fff;position:relative;overflow:hidden}
-.reviews::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1505228395891-9a51e7e86bf6?auto=format&fit=crop&w=1920&q=80') center/cover;opacity:.08}
-.reviews .section-head h2{color:#fff}
-.reviews .section-head .desc{color:rgba(255,255,255,.7)}
-.review-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;position:relative;z-index:1}
-.review-card{background:rgba(255,255,255,.07);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:34px 28px;transition:background .4s,transform .4s}
-.review-card:hover{background:rgba(255,255,255,.12);transform:translateY(-6px)}
-.review-card .stars{color:var(--gold);font-size:14px;margin-bottom:16px;letter-spacing:2px}
-.review-card .text{font-size:14.5px;line-height:1.85;color:rgba(255,255,255,.9);margin-bottom:22px;min-height:120px}
-.review-card .user{display:flex;align-items:center;gap:14px;border-top:1px solid rgba(255,255,255,.12);padding-top:18px}
-.review-card .user .avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-2));display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;flex:none}
-.review-card .user .info .nick{font-size:14px;font-weight:500}
-.review-card .user .info .tag{font-size:12px;color:rgba(255,255,255,.6);margin-top:2px}
+.expansion{background:var(--bg-0);border-top:1px solid rgba(216,180,106,.1)}
+.exp-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:64px;align-items:center}
+.exp-visual{position:relative;aspect-ratio:4/5;overflow:hidden;border:1px solid var(--line);box-shadow:0 28px 64px rgba(0,0,0,.62)}
+.exp-visual .bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse at 50% 34%,rgba(216,180,106,.35) 0%,rgba(125,31,18,.16) 34%,rgba(5,6,10,.96) 76%),
+    linear-gradient(180deg,#161018,#05060a)
+}
+.exp-visual .rune{
+  position:absolute;left:50%;top:44%;width:min(74%,320px);transform:translate(-50%,-50%);
+  opacity:.85;animation:runeSpin 46s linear infinite
+}
+@keyframes runeSpin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.exp-visual .badge{
+  position:absolute;top:22px;left:22px;padding:7px 16px;font-size:12px;letter-spacing:.14em;
+  color:var(--gold-hi);background:rgba(5,6,10,.7);border:1px solid var(--line)
+}
+.exp-visual .caption{
+  position:absolute;left:0;right:0;bottom:0;padding:26px 24px;
+  background:linear-gradient(0deg,rgba(5,6,10,.94),rgba(5,6,10,0));
+  font-family:var(--serif);font-size:13px;letter-spacing:.2em;color:var(--gold)
+}
+.exp-content .kicker{font-family:var(--serif);font-size:12.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.exp-content h2{font-size:clamp(26px,3.4vw,38px);font-weight:700;line-height:1.42;letter-spacing:.1em;color:var(--gold-hi);text-shadow:0 0 16px rgba(216,180,106,.24),0 6px 16px rgba(0,0,0,.7);margin-bottom:20px}
+.exp-content h2 .em{color:var(--gold)}
+.exp-content .lead{font-size:15px;line-height:1.95;color:var(--text);opacity:.88;margin-bottom:32px}
+.exp-list{list-style:none;display:flex;flex-direction:column;gap:18px;margin-bottom:36px}
+.exp-list li{display:flex;gap:16px;align-items:flex-start}
+.exp-list .dot{flex:none;width:38px;height:38px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(216,180,106,.32);transform:rotate(45deg)}
+.exp-list .dot svg{width:18px;height:18px;color:var(--gold);transform:rotate(-45deg)}
+.exp-list .t strong{display:block;font-size:15px;font-weight:700;color:var(--gold-hi);letter-spacing:.06em;margin-bottom:4px}
+.exp-list .t span{font-size:13.5px;color:var(--text-dim);line-height:1.7}
+.exp-actions{display:flex;gap:16px;flex-wrap:wrap}
+.exp-extra{margin-top:30px;padding:18px 22px;border-left:2px solid rgba(216,180,106,.5);background:rgba(216,180,106,.04);font-size:13px;color:var(--text-dim);line-height:1.85}
+.exp-extra b{color:var(--gold);font-weight:400}
 
 /* ============================================================
-   7. 产品规格与购买区
+   5. 悬浮快捷入口
    ============================================================ */
-.buy{background:linear-gradient(180deg,var(--pearl),var(--pearl-2))}
-.buy-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
-.buy-img{position:relative;border-radius:24px;overflow:hidden;box-shadow:var(--shadow-lg);aspect-ratio:1/1}
-.buy-img img{width:100%;height:100%;object-fit:cover}
-.buy-img .float-tag{position:absolute;bottom:24px;right:24px;background:var(--gold);color:#fff;border-radius:14px;padding:14px 20px;text-align:center;box-shadow:0 8px 24px rgba(201,169,110,.4)}
-.buy-img .float-tag .t1{font-size:12px;letter-spacing:1px;opacity:.9}
-.buy-img .float-tag .t2{font-family:var(--serif);font-size:26px;font-weight:600;margin-top:2px}
-.buy-info .kicker{font-family:var(--serif);font-size:15px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
-.buy-info h2{font-size:clamp(26px,3.6vw,38px);font-weight:300;color:var(--deep);line-height:1.3;margin-bottom:16px;letter-spacing:2px}
-.buy-info .sub{color:var(--ink-2);font-size:15px;margin-bottom:26px;line-height:1.8}
-.price-row{display:flex;align-items:baseline;gap:14px;margin-bottom:28px}
-.price-row .now{font-family:var(--serif);font-size:44px;font-weight:600;color:var(--deep)}
-.price-row .now .yen{font-size:24px;vertical-align:top;margin-right:2px}
-.price-row .old{font-size:17px;color:var(--ink-2);text-decoration:line-through;opacity:.6}
-.price-row .off{background:rgba(201,169,110,.15);color:var(--gold-2);font-size:12px;padding:4px 10px;border-radius:50px;letter-spacing:1px}
-.spec-label{font-size:13px;color:var(--ink-2);letter-spacing:1px;margin-bottom:12px}
-.specs{display:flex;gap:14px;margin-bottom:30px;flex-wrap:wrap}
-.spec{padding:14px 24px;border:1.5px solid var(--line);border-radius:14px;font-size:14px;color:var(--ink);transition:all .3s;cursor:pointer;text-align:center}
-.spec .s1{font-weight:500;color:var(--deep)}
-.spec .s2{font-size:12px;color:var(--ink-2);margin-top:3px}
-.spec:hover{border-color:var(--deep-3)}
-.spec.active{border-color:var(--gold);background:rgba(201,169,110,.06);box-shadow:0 4px 14px rgba(201,169,110,.18)}
-.gifts{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 24px;margin-bottom:30px;box-shadow:var(--shadow)}
-.gifts .g-title{font-size:13px;color:var(--gold-2);letter-spacing:1px;margin-bottom:12px;font-weight:500}
-.gifts li{list-style:none;font-size:14px;color:var(--ink-2);display:flex;align-items:center;gap:10px;margin-bottom:8px}
-.gifts li:last-child{margin-bottom:0}
-.gifts li i{color:var(--gold)}
-.buy-actions{display:flex;gap:14px;flex-wrap:wrap}
-.buy-actions .btn-primary{background:var(--deep)}
-.buy-actions .btn-primary:hover{background:var(--deep-2)}
-.btn-cart{background:#fff;color:var(--deep);border:1.5px solid var(--deep);box-shadow:0 6px 20px rgba(10,61,98,.08)}
-.btn-cart:hover{background:var(--pearl-2);transform:translateY(-3px)}
+.dock{position:fixed;right:22px;bottom:32px;z-index:90;display:flex;flex-direction:column;gap:10px}
+.dock button{
+  width:52px;height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  background:rgba(8,8,12,.78);border:1px solid var(--line);color:var(--gold);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  font-size:10.5px;letter-spacing:.08em;
+  transition:all .35s;opacity:0;pointer-events:none
+}
+.dock button svg{width:17px;height:17px}
+.dock button:hover{border-color:var(--gold-hi);color:var(--gold-hi);box-shadow:var(--glow)}
+.dock.show button{opacity:1;pointer-events:auto}
 
 /* ============================================================
-   8. 品牌信任区
+   6. 视频弹窗
    ============================================================ */
-.trust{background:var(--pearl)}
-.trust-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:64px;align-items:center}
-.trust-intro h2{font-size:clamp(26px,3.6vw,38px);font-weight:300;color:var(--deep);margin-bottom:22px;letter-spacing:2px;line-height:1.4}
-.trust-intro h2 .em{font-family:var(--serif);font-style:italic;color:var(--gold-2)}
-.trust-intro p{color:var(--ink-2);font-size:15px;line-height:1.9;margin-bottom:16px}
-.trust-certs{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
-.cert{background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px 22px;display:flex;gap:16px;align-items:center;box-shadow:var(--shadow);transition:transform .35s}
-.cert:hover{transform:translateY(-5px)}
-.cert .ic{flex:none;width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,var(--deep),var(--deep-2));color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px}
-.cert .tx .t{font-size:15px;font-weight:500;color:var(--deep);margin-bottom:3px}
-.cert .tx .d{font-size:12.5px;color:var(--ink-2);line-height:1.6}
+.modal{
+  position:fixed;inset:0;z-index:200;display:none;
+  padding:24px;place-items:center;
+  background:rgba(3,4,7,.88);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)
+}
+.modal.open{display:grid}
+.video-pop{position:relative;width:min(1080px,100%);max-height:100%;display:flex;flex-direction:column;gap:14px}
+.video-pop .frame{
+  position:relative;aspect-ratio:16/9;background:#000;border:1px solid var(--line);
+  box-shadow:0 30px 80px rgba(0,0,0,.8),0 0 42px rgba(216,180,106,.14);overflow:hidden
+}
+.video-pop video{width:100%;height:100%;object-fit:cover;background:#000}
+.video-pop .fallback{
+  position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+  background:radial-gradient(ellipse at 50% 40%,rgba(216,180,106,.14),rgba(5,6,10,.96) 70%);
+  font-family:var(--serif);font-size:14px;letter-spacing:.18em;color:var(--gold);text-align:center;padding:24px
+}
+.video-pop .fallback small{font-family:var(--sans);font-size:12px;letter-spacing:.06em;color:var(--text-dim)}
+.video-pop .bar{display:flex;align-items:center;justify-content:space-between;gap:16px;font-size:12.5px;color:var(--text-dim);letter-spacing:.1em}
+.video-pop .bar .title{font-family:var(--serif);color:var(--gold);letter-spacing:.16em}
+.modal-close{
+  width:44px;height:44px;display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--line);color:var(--gold);background:rgba(8,8,12,.7);transition:all .3s
+}
+.modal-close:hover{border-color:var(--gold-hi);color:var(--gold-hi);box-shadow:var(--glow)}
 
 /* ============================================================
-   9. 页脚
+   7. 页脚
    ============================================================ */
-.footer{background:#072b46;color:rgba(255,255,255,.75);padding:70px 0 30px}
-.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;padding-bottom:44px;border-bottom:1px solid rgba(255,255,255,.12)}
-.footer .brand{display:flex;align-items:baseline;gap:10px;margin-bottom:18px;color:#fff}
-.footer .brand .cn{font-size:24px;font-weight:500;letter-spacing:2px}
-.footer .brand .en{font-family:var(--serif);font-size:15px;letter-spacing:3px;opacity:.8}
-.footer .about{font-size:13.5px;line-height:1.8;max-width:300px}
-.footer h4{color:#fff;font-size:15px;font-weight:500;margin-bottom:18px;letter-spacing:1px}
-.footer ul{list-style:none}
-.footer ul li{margin-bottom:11px}
-.footer ul li a{font-size:13.5px;transition:color .3s}
-.footer ul li a:hover{color:var(--gold)}
-.footer .socials{display:flex;gap:14px;margin-top:6px}
-.footer .socials a{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:15px;transition:all .3s}
-.footer .socials a:hover{background:var(--gold);transform:translateY(-3px)}
-.footer-bottom{padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-size:12.5px;color:rgba(255,255,255,.5)}
-.footer-bottom a:hover{color:var(--gold)}
+.footer{background:#040508;border-top:1px solid rgba(216,180,106,.16);padding:52px 0 28px}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;padding-bottom:32px;border-bottom:1px solid rgba(216,180,106,.1)}
+.footer .brand{display:flex;align-items:center;gap:12px}
+.footer .brand .cn{font-size:20px;font-weight:700;letter-spacing:3px;color:var(--gold-hi)}
+.footer .brand .en{font-family:var(--serif);font-size:11px;letter-spacing:.24em;color:var(--text-dim)}
+.footer .about{margin-top:14px;font-size:12.5px;line-height:1.9;color:var(--text-dim);max-width:420px}
+.footer-links{display:flex;gap:26px;flex-wrap:wrap}
+.footer-links a{font-size:12.5px;letter-spacing:.1em;color:var(--text-dim);transition:color .3s}
+.footer-links a:hover{color:var(--gold)}
+.footer-bottom{padding-top:22px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:11.5px;color:rgba(141,134,119,.8);letter-spacing:.06em}
+
+/* ---------- toast ---------- */
+.toast{
+  position:fixed;left:50%;top:84px;transform:translate(-50%,-8px);z-index:300;
+  padding:13px 26px;background:rgba(8,8,12,.92);border:1px solid var(--line);
+  box-shadow:0 14px 40px rgba(0,0,0,.6),0 0 24px rgba(216,180,106,.16);
+  font-size:13.5px;letter-spacing:.08em;color:var(--gold-hi);
+  opacity:0;transition:opacity .3s,transform .3s;pointer-events:none
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
 
 /* ============================================================
    响应式
    ============================================================ */
+@media(max-width:1100px){
+  .activity-grid{grid-template-columns:repeat(2,1fr)}
+}
 @media(max-width:980px){
-  .features{grid-template-columns:repeat(2,1fr)}
-  .tech-grid,.effect-grid,.buy-grid,.trust-grid{grid-template-columns:1fr;gap:44px}
-  .review-grid{grid-template-columns:1fr}
-  .footer-top{grid-template-columns:1fr 1fr;gap:32px}
   .nav .links{display:none}
-  .nav-burger{display:block}
+  .nav .links.open{
+    display:flex;position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;
+    background:rgba(5,6,10,.97);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:8px 24px
+  }
+  .nav .links.open a{padding:14px 0;width:100%;border-bottom:1px solid rgba(216,180,106,.08)}
+  .nav .links.open a:last-child{border-bottom:none}
+  .nav-burger{display:flex}
+  .exp-grid{grid-template-columns:1fr;gap:40px}
+  .exp-visual{aspect-ratio:16/10;max-width:560px;margin:0 auto;width:100%}
+  .countdown-panel{justify-content:center;text-align:center}
+  .footer-top{flex-direction:column}
+}
+@media(max-width:820px){
+  .dock{right:14px;bottom:18px}
+  .dock button{width:46px;height:46px}
 }
 @media(max-width:560px){
-  .section{padding:72px 0}
-  .features{grid-template-columns:1fr}
-  .effect-visual{grid-template-columns:1fr 1fr;gap:10px}
-  .footer-top{grid-template-columns:1fr}
-  .price-row .now{font-size:36px}
-  .hero .cta-group .btn{padding:14px 30px;font-size:14px}
+  .section{padding:74px 0}
+  .activity-grid{grid-template-columns:1fr}
+  .cd-cell{min-width:64px;padding:10px 6px}
+  .cd-cell .num{font-size:26px}
+  .cd-sep{font-size:20px}
+  .countdown{gap:8px}
+  .hero .cta-group .btn{padding:14px 26px;font-size:13.5px;letter-spacing:.12em}
+  .hero .period{font-size:11.5px;letter-spacing:.12em;padding:6px 14px}
+  .hero-inner{padding:0 18px}
+  .kv-dots{bottom:82px}
+  .section-head h2{letter-spacing:.08em}
+  .exp-actions .btn{width:100%}
+  .footer-bottom{flex-direction:column;gap:8px}
+  .music-btn{padding:8px 10px;font-size:11px}
+  .nav .brand .cn{font-size:19px}
+}
+/* 降低动效偏好 */
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important}
+  .reveal{opacity:1;transform:none}
 }
 </style>
 </head>
 <body>
 
 <!-- ============================================================
-     顶部导航
+     1. 顶部固定导航（徽记 + 主导航 + 音乐开关 + 汉堡菜单）
      ============================================================ -->
 <nav class="nav" id="nav">
   <div class="wrap">
-    <a href="#hero" class="brand">
-      <span class="cn">珀莱雅</span>
-      <span class="en">PROYA</span>
+    <a href="#hero" class="brand" aria-label="龙之谷 首页">
+      <svg class="brand-mark" viewBox="0 0 64 64" role="img" aria-label="龙之谷徽记">
+        <defs>
+          <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#f2dfa9"/>
+            <stop offset=".55" stop-color="#d8b46a"/>
+            <stop offset="1" stop-color="#8a6a2e"/>
+          </linearGradient>
+        </defs>
+        <path d="M32 5 55 14v17c0 14-10 24-23 28-13-4-23-14-23-28V14z" fill="none" stroke="url(#goldGrad)" stroke-width="2"/>
+        <path d="M32 13 48 19v12c0 10-7 17-16 21-9-4-16-11-16-21V19z" fill="none" stroke="#d8b46a" stroke-width="1" opacity=".5"/>
+        <path d="M19 33c5-7 9-8 12-2 1 2 1 3 1 5-4 5-7 3-9-1-2-3-3-5-4-2" fill="none" stroke="#f2dfa9" stroke-width="1.6"/>
+        <path d="M45 33c-5-7-9-8-12-2-1 2-1 3-1 5 4 5 7 3 9-1 2-3 3-5 4 2" fill="none" stroke="#f2dfa9" stroke-width="1.6"/>
+        <circle cx="32" cy="24" r="2.6" fill="#f2dfa9"/>
+      </svg>
+      <span>
+        <span class="cn">龙之谷</span>
+        <span class="en">DRAGON NEST</span>
+      </span>
     </a>
-    <div class="links">
-      <a href="#features">核心卖点</a>
-      <a href="#tech">成分科技</a>
-      <a href="#effect">使用效果</a>
-      <a href="#reviews">用户评价</a>
-      <a href="#buy">立即购买</a>
+
+    <div class="links" id="navLinks">
+      <a href="#activities">活动</a>
+      <a href="#expansion">资料片</a>
+      <a href="#dl">下载</a>
+      <a href="#gift">礼包</a>
     </div>
-    <i class="fa-solid fa-bars nav-burger" aria-hidden="true"></i>
+
+    <div class="nav-tools">
+      <button class="music-btn" id="musicBtn" type="button" aria-pressed="false" aria-label="背景音乐开关">
+        <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span class="music-label">BGM</span>
+      </button>
+      <button class="nav-burger" id="navBurger" type="button" aria-label="展开导航" aria-expanded="false">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
+      </button>
+    </div>
   </div>
 </nav>
 
 <!-- ============================================================
-     1. Hero 首屏
+     2. 主视觉 KV（描金标题 + 双 CTA + KV 轮播 + 滚动提示）
      ============================================================ -->
 <header class="hero" id="hero">
+  <div class="kv kv-1 active" data-kv="0" aria-hidden="true"></div>
+  <div class="kv kv-2" data-kv="1" aria-hidden="true"></div>
+  <div class="kv kv-3" data-kv="2" aria-hidden="true"></div>
+  <div class="sparks" aria-hidden="true"></div>
+
   <div class="hero-inner">
-    <div class="eyebrow">Deep Sea · Marine Repair</div>
-    <h1>深海焕能 <span class="em">紧致</span>面霜</h1>
-    <p class="slogan">源自深海的修护力量，唤醒肌肤年轻光采</p>
+    <div class="eyebrow">Dragon Nest · 15th Anniversary</div>
+    <h1>龙之谷</h1>
+    <p class="activity-name">十五周年资料片 <span>黎明远征</span></p>
+    <p class="slogan">当黎明撕开永夜，龙魂再度苏醒 —— 集结勇士，远征深渊，夺回被黑暗吞噬的圣殿。</p>
+    <div class="period">活动时间 <b>2026.11.20 — 2026.12.31</b></div>
     <div class="cta-group">
-      <a href="#buy" class="btn btn-primary"><i class="fa-solid fa-bag-shopping"></i> 立即购买</a>
-      <a href="#tech" class="btn btn-ghost">探索科技 <i class="fa-solid fa-arrow-right"></i></a>
+      <a href="#activities" class="btn btn-gold">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>
+        立即参与
+      </a>
+      <button class="btn btn-outline btn-play" id="heroPlay" type="button">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" stroke="currentColor" stroke-width="1.4" fill="currentColor" opacity=".9"/></svg>
+        观看资料片 CG
+      </button>
     </div>
   </div>
-  <div class="scroll-hint">
-    <span>SCROLL</span>
-    <span class="line"></span>
+
+  <div class="kv-dots" id="kvDots" role="tablist" aria-label="主视觉轮播切换">
+    <button type="button" class="active" data-go="0" aria-label="主视觉 1"></button>
+    <button type="button" data-go="1" aria-label="主视觉 2"></button>
+    <button type="button" data-go="2" aria-label="主视觉 3"></button>
   </div>
+  <div class="scroll-hint" aria-hidden="true"><span>SCROLL</span><span class="line"></span></div>
 </header>
 
 <!-- ============================================================
-     2. 核心卖点区
+     3. 活动入口 + 倒计时
      ============================================================ -->
-<section class="section" id="features">
+<section class="section activities" id="activities">
   <div class="wrap">
     <div class="section-head reveal">
-      <div class="kicker">Core Advantages</div>
-      <h2>四大<span class="em">核心</span>卖点</h2>
-      <p class="desc">从深海到肌肤，层层递进的修护与焕能，为年轻肌底注入源源活力</p>
+      <div class="kicker">Event Entrance</div>
+      <h2>四大<span class="em">限时</span>活动</h2>
+      <p class="desc">周年庆期间全部活动一屏直达，登录即领、限时副本、集换礼包同步开放</p>
     </div>
-    <div class="features">
-      <!-- 卖点 1：成分 -->
-      <div class="feature-card reveal d1">
-        <div class="icon"><i class="fa-solid fa-droplet"></i></div>
-        <h3>深海修护成分</h3>
-        <p>萃取深海藻类与海洋矿物质，富含氨基酸与微量元素，深层修护肌肤屏障</p>
+
+    <div class="activity-grid">
+      <article class="activity-card reveal d1">
+        <span class="badge">NEW</span>
+        <div class="ico">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3 6 6 1-4.5 4.5 1 6.5-5.5-3-5.5 3 1-6.5L3 9l6-1z" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>
+        </div>
+        <h3>黎明远征 · 新服开启</h3>
+        <div class="time">11.20 10:00 开服</div>
+        <p>全新服务器「黎明圣殿」同步开放，开服前 7 天经验加成 200%，预约即得限定称号。</p>
+        <button class="act-btn" type="button" data-toast="新服预约已记录（演示页面，不接入真实活动数据）">立即预约</button>
+      </article>
+
+      <article class="activity-card reveal d2">
+        <span class="badge">限时</span>
+        <div class="ico">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v13H4zM4 6l3-3h10l3 3M9 19v3M15 19v3" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>
+        </div>
+        <h3>深渊回响 · 限时副本</h3>
+        <div class="time">每日 20:00 — 22:00</div>
+        <p>组队挑战深渊领主，掉落「黎明水晶」与传说装备图纸，每周首通额外奖励。</p>
+        <button class="act-btn" type="button" data-toast="已打开副本入口（演示页面）">组队挑战</button>
+      </article>
+
+      <article class="activity-card reveal d3">
+        <span class="badge">每日</span>
+        <div class="ico">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M5 8l7-5 7 5M7 21h10" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>
+        </div>
+        <h3>龙魂觉醒 · 登录福利</h3>
+        <div class="time">累计 7 天 · 每日重置</div>
+        <p>连续登录解锁龙魂宝箱，第 7 天必得「圣光狮鹫」坐骑碎片 ×10。</p>
+        <button class="act-btn" type="button" data-toast="登录福利已领取（演示页面）">签到领取</button>
+      </article>
+
+      <article class="activity-card reveal d4">
+        <span class="badge">稀有</span>
+        <div class="ico">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9h18v4H3zM5 13v8h14v-8M12 9v12M8 9c-2-4 1-6 4-2 3-4 6-2 4 2" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>
+        </div>
+        <h3>圣光狮鹫 · 集换礼包</h3>
+        <div class="time">活动期间 · 集齐即兑</div>
+        <p>集齐 2026 枚黎明水晶兑换限定坐骑，额外赠送周年纪念时装一套。</p>
+        <button class="act-btn" type="button" data-toast="礼包兑换页已打开（演示页面）">查看礼包</button>
+      </article>
+    </div>
+
+    <!-- 倒计时 -->
+    <div class="countdown-panel reveal" id="countdown">
+      <div class="cd-title">
+        <span class="k">Countdown</span>
+        <span class="t">活动结束倒计时</span>
+        <span class="s">黎明远征 · 2026.12.31 23:59 结束</span>
       </div>
-      <!-- 卖点 2：功效 -->
-      <div class="feature-card reveal d2">
-        <div class="icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
-        <h3>抗老紧致提亮</h3>
-        <p>多肽复合物协同烟酰胺，淡化细纹、紧致轮廓，令肤色匀净透亮</p>
-      </div>
-      <!-- 卖点 3：科技 -->
-      <div class="feature-card reveal d3">
-        <div class="icon"><i class="fa-solid fa-flask"></i></div>
-        <h3>专研渗透科技</h3>
-        <p>脂质体包裹缓释技术，有效成分直达肌底，吸收率提升至寻常的 3 倍</p>
-      </div>
-      <!-- 卖点 4：肤感 -->
-      <div class="feature-card reveal d4">
-        <div class="icon"><i class="fa-solid fa-feather"></i></div>
-        <h3>轻盈丝绒肤感</h3>
-        <p>冰淇淋般一抹化水，不油腻不搓泥，干性、油性、敏感肌均可安心使用</p>
+      <div class="countdown" id="cdBody" aria-live="polite">
+        <div class="cd-cell"><div class="num" id="cdDay">--</div><div class="unit">DAYS</div></div>
+        <span class="cd-sep" aria-hidden="true">:</span>
+        <div class="cd-cell"><div class="num" id="cdHour">--</div><div class="unit">HOURS</div></div>
+        <span class="cd-sep" aria-hidden="true">:</span>
+        <div class="cd-cell"><div class="num" id="cdMin">--</div><div class="unit">MINS</div></div>
+        <span class="cd-sep" aria-hidden="true">:</span>
+        <div class="cd-cell"><div class="num" id="cdSec">--</div><div class="unit">SECS</div></div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ============================================================
-     3. 成分科技区
+     4. 资料片 / 福利（图文左右 + 福利清单）
      ============================================================ -->
-<section class="section tech" id="tech">
+<section class="section expansion" id="expansion">
   <div class="wrap">
-    <div class="tech-grid">
-      <!-- 左图 -->
-      <div class="tech-img reveal">
-        <span class="badge"><i class="fa-solid fa-award"></i> 专研配方</span>
-        <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80" alt="深海成分科研">
+    <div class="exp-grid">
+      <div class="exp-visual reveal">
+        <div class="bg" aria-hidden="true"></div>
+        <svg class="rune" viewBox="0 0 300 300" aria-hidden="true">
+          <circle cx="150" cy="150" r="142" fill="none" stroke="rgba(216,180,106,.35)" stroke-width="1"/>
+          <circle cx="150" cy="150" r="120" fill="none" stroke="rgba(216,180,106,.22)" stroke-width="1"/>
+          <circle cx="150" cy="150" r="86" fill="none" stroke="rgba(242,223,169,.32)" stroke-width="1"/>
+          <path d="M150 28l106 61v122L150 272 44 211V89z" fill="none" stroke="rgba(216,180,106,.3)" stroke-width="1.2"/>
+          <path d="M150 62l70 40v96l-70 40-70-40v-96z" fill="none" stroke="rgba(242,223,169,.18)" stroke-width="1"/>
+          <g stroke="rgba(242,223,169,.55)" stroke-width="1.4" fill="none">
+            <path d="M150 96v108M118 150h64M126 122l48 56M174 122l-48 56"/>
+          </g>
+          <circle cx="150" cy="150" r="14" fill="none" stroke="rgba(242,223,169,.75)" stroke-width="1.2"/>
+        </svg>
+        <span class="badge">V 15.0 资料片</span>
+        <div class="caption">黎明圣殿 · 场景概念占位</div>
       </div>
-      <!-- 右文 -->
-      <div class="tech-content reveal d1">
-        <div class="kicker">Science & Ingredient</div>
-        <h2>深海 <span class="em">巨藻</span> 精萃<br>十年专研修护力</h2>
-        <p class="lead">珀莱雅联合法国海洋生物实验室，从北大西洋深海巨藻中提取高纯度活性肽，搭配海洋深层水与烟酰胺，构建「修护—抗老—提亮」三重功效矩阵，从源头激活肌肤年轻机制。</p>
-        <ul class="tech-list">
+
+      <div class="exp-content reveal d1">
+        <div class="kicker">Expansion · Dawn Expedition</div>
+        <h2>「<span class="em">黎明远征</span>」<br>资料片 11.20 全平台上线</h2>
+        <p class="lead">永夜之后的第一个黎明，圣殿废墟重新亮起。新职业「龙骑士」觉醒、新地图「黎明圣殿」开放、装备继承系统同步上线，老玩家回归即可继承既有战力，直接进入远征队列。</p>
+        <ul class="exp-list" id="gift">
           <li>
-            <span class="dot"><i class="fa-solid fa-seedling"></i></span>
-            <div class="t"><strong>深海巨藻活性肽</strong><span>促进胶原合成，提升肌肤弹力与紧致度</span></div>
+            <span class="dot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 5-8 5-8-5zM4 13l8 5 8-5M4 17l8 5 8-5" stroke="currentColor" stroke-width="1.3" fill="none"/></svg></span>
+            <div class="t"><strong>新职业 · 龙骑士觉醒</strong><span>双形态切换：龙枪近战与龙息远程，觉醒后解锁专属终结技「黎明裁决」</span></div>
           </li>
           <li>
-            <span class="dot"><i class="fa-solid fa-water"></i></span>
-            <div class="t"><strong>海洋深层矿物水</strong><span>富含 72 种微量元素，持久锁水保湿 48 小时</span></div>
+            <span class="dot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18l6-9 4 6 3-4 5 7M3 21h18" stroke="currentColor" stroke-width="1.3" fill="none"/></svg></span>
+            <div class="t"><strong>新地图 · 黎明圣殿</strong><span>三层立体副本结构，含昼夜切换机制与隐藏 BOSS「永夜残影」</span></div>
           </li>
           <li>
-            <span class="dot"><i class="fa-solid fa-sun"></i></span>
-            <div class="t"><strong>5% 烟酰胺 + 多肽</strong><span>匀净提亮肤色，淡化细纹与暗沉</span></div>
+            <span class="dot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 2 5.6M4 20v-5h5" stroke="currentColor" stroke-width="1.3" fill="none"/></svg></span>
+            <div class="t"><strong>装备继承系统</strong><span>旧版本强化等级按 1:1 继承至新装备，弃置装备可兑换黎明水晶</span></div>
+          </li>
+          <li>
+            <span class="dot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8h18v4H3zM5 12v9h14v-9M12 8v13" stroke="currentColor" stroke-width="1.3" fill="none"/></svg></span>
+            <div class="t"><strong>回归玩家专属礼包</strong><span>30 天未登录账号回归，直领传说装备自选箱与 7 日双倍经验</span></div>
           </li>
         </ul>
-        <a href="#buy" class="btn-link">了解更多成分故事 <i class="fa-solid fa-arrow-right"></i></a>
+        <div class="exp-actions" id="dl">
+          <button class="btn btn-gold" type="button" id="downloadBtn">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 3v12M7 11l5 5 5-5M4 20h16" stroke="currentColor" stroke-width="1.7" fill="none"/></svg>
+            下载客户端
+          </button>
+          <button class="btn btn-outline btn-play" type="button" id="expPlay">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" stroke="currentColor" stroke-width="1.4" fill="currentColor" opacity=".9"/></svg>
+            观看资料片 CG
+          </button>
+        </div>
+        <p class="exp-extra">客户端安装包约 <b>18.6 GB</b>，支持 Windows 10/11 与 macOS 13+；活动期每日 10:00—次日 02:00 提供高速下载通道。</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ============================================================
-     4. 使用效果区
+     5. 悬浮快捷入口
      ============================================================ -->
-<section class="section" id="effect">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div class="kicker">Visible Results</div>
-      <h2>4 周 <span class="em">见证</span> 肌肤改变</h2>
-      <p class="desc">基于 120 位 25–40 岁女性连续使用 4 周的自我评估数据</p>
-    </div>
-    <div class="effect-grid">
-      <!-- 使用前后对比图 -->
-      <div class="effect-visual reveal">
-        <div class="pic">
-          <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=600&q=80" alt="使用前">
-          <span class="tag">使用前</span>
-        </div>
-        <div class="pic">
-          <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=600&q=80" alt="使用后">
-          <span class="tag">使用 4 周后</span>
-        </div>
-      </div>
-      <!-- 肤质数据可视化 -->
-      <div class="effect-stats reveal d1">
-        <div class="stat">
-          <div class="label"><span class="name">肌肤紧致度提升</span><span class="num">91<span class="pct">%</span></span></div>
-          <div class="bar"><div class="fill" data-w="91"></div></div>
-        </div>
-        <div class="stat">
-          <div class="label"><span class="name">细纹淡化改善</span><span class="num">87<span class="pct">%</span></span></div>
-          <div class="bar"><div class="fill" data-w="87"></div></div>
-        </div>
-        <div class="stat">
-          <div class="label"><span class="name">肌肤水润度提升</span><span class="num">95<span class="pct">%</span></span></div>
-          <div class="bar"><div class="fill" data-w="95"></div></div>
-        </div>
-        <div class="stat">
-          <div class="label"><span class="name">肤色匀净透亮</span><span class="num">84<span class="pct">%</span></span></div>
-          <div class="bar"><div class="fill" data-w="84"></div></div>
-        </div>
-        <p class="effect-note">* 数据来源于珀莱雅内部实验室，个体效果因人而异，仅供参考。</p>
-      </div>
-    </div>
-  </div>
-</section>
+<div class="dock" id="dock">
+  <button type="button" data-toast="已打开礼包中心（演示页面）" aria-label="礼包中心">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h16v4H4zM6 13v8h12v-8M12 9v12" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>
+    礼包
+  </button>
+  <button type="button" id="dockDl" aria-label="下载客户端">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 11l5 5 5-5M4 20h16" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>
+    下载
+  </button>
+  <button type="button" id="dockTop" aria-label="回到顶部">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V6M6 12l6-6 6 6" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>
+    顶部
+  </button>
+</div>
 
 <!-- ============================================================
-     5. 用户评价区
+     6. 视频弹窗
      ============================================================ -->
-<section class="section reviews" id="reviews">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div class="kicker">Customer Reviews</div>
-      <h2>真实用户 <span class="em">口碑</span></h2>
-      <p class="desc">超过 10,000+ 用户好评，听听她们的真实使用感受</p>
+<div class="modal" id="videoModal" role="dialog" aria-modal="true" aria-label="资料片 CG 播放" aria-hidden="true">
+  <div class="video-pop">
+    <div class="frame">
+      <video id="cgVideo" playsinline controls preload="none"></video>
+      <div class="fallback" id="videoFallback">
+        CG 素材占位
+        <small>正式上线前替换 CONFIG.VIDEO_SRC 为官方 CDN 地址</small>
+      </div>
     </div>
-    <div class="review-grid">
-      <!-- 评价 1 -->
-      <div class="review-card reveal d1">
-        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-        <p class="text">"用了大概三周，最大的感受是皮肤变弹润了，法令纹那边没那么干卡。质地很舒服，不油腻，白天化妆前用也不搓泥，会回购。"</p>
-        <div class="user">
-          <div class="avatar"><i class="fa-solid fa-user"></i></div>
-          <div class="info"><div class="nick">林**婷</div><div class="tag">干性肌肤 · 32 岁</div></div>
-        </div>
-      </div>
-      <!-- 评价 2 -->
-      <div class="review-card reveal d2">
-        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-        <p class="text">"回购第三瓶了！深海系列的修护力真的很可，换季敏感期用着很安心，泛红明显减少。淡淡的海洋味闻着很治愈，性价比很高。"</p>
-        <div class="user">
-          <div class="avatar"><i class="fa-solid fa-user"></i></div>
-          <div class="info"><div class="nick">小**鹿</div><div class="tag">敏感肌肤 · 28 岁</div></div>
-        </div>
-      </div>
-      <!-- 评价 3 -->
-      <div class="review-card reveal d3">
-        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div>
-        <p class="text">"作为油皮一开始担心面霜会闷，但这款肤感意外清爽，上脸化水吸收快。用了一个月感觉肤色匀净了不少，毛孔也细腻了，推荐。"</p>
-        <div class="user">
-          <div class="avatar"><i class="fa-solid fa-user"></i></div>
-          <div class="info"><div class="nick">C**ris</div><div class="tag">油性肌肤 · 35 岁</div></div>
-        </div>
-      </div>
+    <div class="bar">
+      <span class="title">《龙之谷》十五周年资料片「黎明远征」CG</span>
+      <button class="modal-close" id="modalClose" type="button" aria-label="关闭视频弹窗">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 6l12 12M18 6l-12 12" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
+      </button>
     </div>
   </div>
-</section>
+</div>
 
 <!-- ============================================================
-     6. 产品规格与购买区
-     ============================================================ -->
-<section class="section buy" id="buy">
-  <div class="wrap">
-    <div class="buy-grid">
-      <!-- 产品图 -->
-      <div class="buy-img reveal">
-        <img src="https://images.unsplash.com/photo-1571781926291-c477ebfd024b?auto=format&fit=crop&w=900&q=80" alt="珀莱雅深海焕能紧致面霜">
-        <div class="float-tag">
-          <div class="t1">新品上市</div>
-          <div class="t2">8 折</div>
-        </div>
-      </div>
-      <!-- 购买信息 -->
-      <div class="buy-info reveal d1">
-        <div class="kicker">Shop Now</div>
-        <h2>深海焕能紧致面霜</h2>
-        <p class="sub">深海巨藻精萃 × 多肽复合，一瓶修护抗老，焕启年轻紧致光采</p>
-
-        <!-- 价格 -->
-        <div class="price-row">
-          <span class="now"><span class="yen">¥</span>298</span>
-          <span class="old">¥368</span>
-          <span class="off">新品限时 8 折</span>
-        </div>
-
-        <!-- 规格选择 -->
-        <div class="spec-label">选择规格</div>
-        <div class="specs">
-          <div class="spec active" data-price="298">
-            <div class="s1">50g</div>
-            <div class="s2">正装 · 推荐</div>
-          </div>
-          <div class="spec" data-price="178">
-            <div class="s1">30g</div>
-            <div class="s2">体验装</div>
-          </div>
-          <div class="spec" data-price="498">
-            <div class="s1">50g × 2</div>
-            <div class="s2">囤货装</div>
-          </div>
-        </div>
-
-        <!-- 赠品信息 -->
-        <div class="gifts">
-          <div class="g-title"><i class="fa-solid fa-gift"></i> 新品限时赠礼</div>
-          <ul>
-            <li><i class="fa-solid fa-check"></i> 赠 同系列精华小样 7ml × 2</li>
-            <li><i class="fa-solid fa-check"></i> 赠 海洋保湿面膜 5 片</li>
-            <li><i class="fa-solid fa-check"></i> 满 299 元包邮，30 天无理由退换</li>
-          </ul>
-        </div>
-
-        <!-- 购买按钮 -->
-        <div class="buy-actions">
-          <button class="btn btn-primary" id="buyNow"><i class="fa-solid fa-bag-shopping"></i> 立即购买</button>
-          <button class="btn btn-cart" id="addCart"><i class="fa-solid fa-cart-plus"></i> 加入购物车</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     7. 品牌信任区
-     ============================================================ -->
-<section class="section trust" id="trust">
-  <div class="wrap">
-    <div class="trust-grid">
-      <div class="trust-intro reveal">
-        <h2>珀莱雅 <span class="em">PROYA</span><br>源自深海的护肤哲学</h2>
-        <p>珀莱雅创立于 2003 年，始终秉持「深海·纯净·科技」的品牌理念，致力于将海洋的天然修护力量与现代护肤科技相结合，为亚洲女性提供安全、高效、高品质的护肤产品。</p>
-        <p>所有产品均经过严苛质检，不含酒精、荧光剂与刺激性防腐剂，并通过多项国际权威认证，让你每一瓶都用得安心。</p>
-      </div>
-      <div class="trust-certs reveal d1">
-        <div class="cert">
-          <div class="ic"><i class="fa-solid fa-shield-halved"></i></div>
-          <div class="tx"><div class="t">SGS 质检认证</div><div class="d">第三方权威检测，安全放心</div></div>
-        </div>
-        <div class="cert">
-          <div class="ic"><i class="fa-solid fa-leaf"></i></div>
-          <div class="tx"><div class="t">无添加配方</div><div class="d">不含酒精 / 荧光剂 / 激素</div></div>
-        </div>
-        <div class="cert">
-          <div class="ic"><i class="fa-solid fa-rotate-left"></i></div>
-          <div class="tx"><div class="t">30 天无忧退换</div><div class="d">不满意可申请退换货</div></div>
-        </div>
-        <div class="cert">
-          <div class="ic"><i class="fa-solid fa-truck-fast"></i></div>
-          <div class="tx"><div class="t">顺丰极速达</div><div class="d">满 299 元全国包邮</div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     8. 页脚
+     7. 页脚
      ============================================================ -->
 <footer class="footer">
   <div class="wrap">
     <div class="footer-top">
       <div>
-        <div class="brand"><span class="cn">珀莱雅</span><span class="en">PROYA</span></div>
-        <p class="about">源自深海的护肤哲学，以海洋之力唤醒肌肤年轻光采。珀莱雅，让科学护肤更纯净。</p>
-        <div class="socials">
-          <a href="#" aria-label="微博"><i class="fa-brands fa-weibo"></i></a>
-          <a href="#" aria-label="微信"><i class="fa-brands fa-weixin"></i></a>
-          <a href="#" aria-label="小红书"><i class="fa-solid fa-book"></i></a>
-          <a href="#" aria-label="抖音"><i class="fa-brands fa-tiktok"></i></a>
+        <div class="brand">
+          <svg viewBox="0 0 64 64" width="30" height="30" aria-hidden="true">
+            <path d="M32 5 55 14v17c0 14-10 24-23 28-13-4-23-14-23-28V14z" fill="none" stroke="#d8b46a" stroke-width="2"/>
+            <path d="M19 33c5-7 9-8 12-2 1 2 1 3 1 5-4 5-7 3-9-1-2-3-3-5-4-2" fill="none" stroke="#f2dfa9" stroke-width="1.6"/>
+            <path d="M45 33c-5-7-9-8-12-2-1 2-1 3-1 5 4 5 7 3 9-1 2-3 3-5 4 2" fill="none" stroke="#f2dfa9" stroke-width="1.6"/>
+          </svg>
+          <span>
+            <span class="cn">龙之谷</span>
+            <span class="en">DRAGON NEST</span>
+          </span>
         </div>
+        <p class="about">《龙之谷》十五周年「黎明远征」活动介绍页。本页面为演示用静态页，页面内活动信息、时间与奖励均为示意，不代表官方正式活动；官方素材在确认授权后统一替换。</p>
       </div>
-      <div>
-        <h4>产品中心</h4>
-        <ul>
-          <li><a href="#">面霜系列</a></li>
-          <li><a href="#">精华系列</a></li>
-          <li><a href="#">水乳系列</a></li>
-          <li><a href="#">防晒系列</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>客户服务</h4>
-        <ul>
-          <li><a href="#">购物指南</a></li>
-          <li><a href="#">配送说明</a></li>
-          <li><a href="#">退换政策</a></li>
-          <li><a href="#">常见问题</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>关于我们</h4>
-        <ul>
-          <li><a href="#">品牌故事</a></li>
-          <li><a href="#">成分科技</a></li>
-          <li><a href="#">新闻动态</a></li>
-          <li><a href="#">联系我们</a></li>
-        </ul>
+      <div class="footer-links">
+        <a href="#activities">活动总览</a>
+        <a href="#expansion">资料片</a>
+        <a href="#dl">客户端下载</a>
+        <a href="#gift">福利礼包</a>
+        <a href="#hero">返回顶部</a>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2024 珀莱雅 PROYA. 本页面为演示用推广页，所有信息均为虚构。</span>
-      <span>客服热线：400-888-0000 · ICP 备案号 0000000 号</span>
+      <span>© 2026 龙之谷 Dragon Nest · 演示页面，非官方站点</span>
+      <span>客服热线 400-000-0000 · 沪 ICP 备 00000000 号-1 · 沪网文〔2026〕0000-000 号</span>
     </div>
   </div>
 </footer>
 
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
 <!-- ============================================================
-     JavaScript：导航/动画/规格/购买交互
+     JavaScript：配置常量 / 导航 / 轮播 / 倒计时 / 音乐 / 视频弹窗
      ============================================================ -->
 <script>
-(function(){
+(function () {
   'use strict';
 
-  /* ---------- 导航栏滚动变色 ---------- */
-  const nav = document.getElementById('nav');
-  window.addEventListener('scroll', function(){
-    if(window.scrollY > 60){ nav.classList.add('scrolled'); }
-    else{ nav.classList.remove('scrolled'); }
-  }, {passive:true});
+  /* ---------- 配置常量（运营改这一处即可） ---------- */
+  var CONFIG = {
+    TARGET_TIME: '2026-12-31T23:59:59+08:00', // 倒计时目标时间
+    KV_INTERVAL: 5000,                        // 主视觉轮播间隔
+    VIDEO_SRC: 'assets/kv-trailer.mp4',        // 占位素材，上线替换为官方 CDN 地址
+    AUDIO_SRC: 'assets/bgm.mp3',              // 占位素材
+    PLAY_REEL: true                           // 轮播素材不足两屏时置 false
+  };
 
-  /* ---------- 滚动淡入动画（IntersectionObserver） ---------- */
-  const io = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){
-        e.target.classList.add('show');
-        // 效果区进度条动画
-        if(e.target.classList.contains('effect-stats')){
-          e.target.querySelectorAll('.fill').forEach(function(f){
-            f.style.width = f.getAttribute('data-w') + '%';
-          });
+  /* ---------- 工具 ---------- */
+  function $(sel, root) { return (root || document).querySelector(sel); }
+  function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+  function pad(n) { return n < 10 ? '0' + n : String(n); }
+
+  var toastEl = $('#toast');
+  var toastTimer = null;
+  function toast(msg) {
+    if (!toastEl || !msg) { return; }
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toastEl.classList.remove('show'); }, 2400);
+  }
+
+  /* ---------- 1. 导航滚动态 ---------- */
+  try {
+    var nav = $('#nav');
+    if (nav) {
+      var onScroll = function () {
+        if (window.scrollY > 60) { nav.classList.add('scrolled'); }
+        else { nav.classList.remove('scrolled'); }
+        var dock = $('#dock');
+        if (dock) {
+          if (window.scrollY > 520) { dock.classList.add('show'); }
+          else { dock.classList.remove('show'); }
         }
-        io.unobserve(e.target);
-      }
-    });
-  }, {threshold:0.18});
-  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    }
+  } catch (e) { console.warn('nav module skipped', e); }
 
-  /* 效果区进度条：当 effect-stats 进入视口时触发（单独处理，因 fill 在子元素） */
-  const statsIO = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){
-        e.target.querySelectorAll('.fill').forEach(function(f){
-          f.style.width = f.getAttribute('data-w') + '%';
+  /* ---------- 2. 移动端汉堡菜单 ---------- */
+  try {
+    var burger = $('#navBurger');
+    var links = $('#navLinks');
+    if (burger && links) {
+      burger.addEventListener('click', function () {
+        var opened = links.classList.toggle('open');
+        burger.setAttribute('aria-expanded', opened ? 'true' : 'false');
+      });
+      $all('a', links).forEach(function (a) {
+        a.addEventListener('click', function () {
+          links.classList.remove('open');
+          burger.setAttribute('aria-expanded', 'false');
         });
-        statsIO.unobserve(e.target);
-      }
-    });
-  }, {threshold:0.3});
-  const statsEl = document.querySelector('.effect-stats');
-  if(statsEl){ statsIO.observe(statsEl); }
+      });
+    }
+  } catch (e) { console.warn('burger module skipped', e); }
 
-  /* ---------- 规格选择 ---------- */
-  const specs = document.querySelectorAll('.spec');
-  const priceNow = document.querySelector('.price-row .now');
-  specs.forEach(function(spec){
-    spec.addEventListener('click', function(){
-      specs.forEach(function(s){ s.classList.remove('active'); });
-      spec.classList.add('active');
-      const price = spec.getAttribute('data-price');
-      // 更新价格（保留 yen 符号）
-      priceNow.innerHTML = '<span class="yen">¥</span>' + price;
-    });
-  });
-
-  /* ---------- 购买按钮交互（演示用 toast） ---------- */
-  function toast(msg){
-    let t = document.createElement('div');
-    t.textContent = msg;
-    t.style.cssText = 'position:fixed;left:50%;top:30px;transform:translateX(-50%);background:#0a3d62;color:#fff;padding:14px 28px;border-radius:50px;font-size:14px;letter-spacing:1px;z-index:9999;box-shadow:0 10px 30px rgba(10,61,98,.3);opacity:0;transition:opacity .3s,transform .3s';
-    document.body.appendChild(t);
-    requestAnimationFrame(function(){
-      t.style.opacity = '1';
-      t.style.transform = 'translateX(-50%) translateY(8px)';
-    });
-    setTimeout(function(){
-      t.style.opacity = '0';
-      setTimeout(function(){ t.remove(); }, 300);
-    }, 2200);
-  }
-  const buyNow = document.getElementById('buyNow');
-  const addCart = document.getElementById('addCart');
-  if(buyNow){ buyNow.addEventListener('click', function(){ toast('已加入购买流程（演示页面）'); }); }
-  if(addCart){ addCart.addEventListener('click', function(){ toast('已加入购物车（演示页面）'); }); }
-
-  /* ---------- 移动端菜单（简单锚点展开） ---------- */
-  const burger = document.querySelector('.nav-burger');
-  if(burger){
-    burger.addEventListener('click', function(){
-      const links = document.querySelector('.nav .links');
-      if(links.style.display === 'flex'){
-        links.style.display = 'none';
+  /* ---------- 3. 滚动淡入 ---------- */
+  try {
+    var reveals = $all('.reveal');
+    if (reveals.length) {
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) {
+            if (en.isIntersecting) {
+              en.target.classList.add('show');
+              io.unobserve(en.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -8% 0px' });
+        reveals.forEach(function (el) { io.observe(el); });
       } else {
-        links.style.display = 'flex';
-        links.style.position = 'absolute';
-        links.style.top = '100%';
-        links.style.left = '0';
-        links.style.right = '0';
-        links.style.flexDirection = 'column';
-        links.style.background = 'rgba(250,252,254,.96)';
-        links.style.padding = '20px 24px';
-        links.style.gap = '16px';
-        links.style.boxShadow = '0 10px 30px rgba(10,61,98,.1)';
-        links.querySelectorAll('a').forEach(function(a){ a.style.color = '#4a5d70'; });
+        reveals.forEach(function (el) { el.classList.add('show'); });
       }
+    }
+  } catch (e) { console.warn('reveal module skipped', e); }
+
+  /* ---------- 4. KV 轮播（交叉淡入 / 悬停暂停 / 触摸滑动） ---------- */
+  try {
+    var kvList = $all('.kv');
+    var dots = $all('#kvDots button');
+    var reelTimer = null;
+    var reelIndex = 0;
+
+    function showKv(i) {
+      if (!kvList.length) { return; }
+      reelIndex = i % kvList.length;
+      kvList.forEach(function (el, idx) { el.classList.toggle('active', idx === reelIndex); });
+      dots.forEach(function (d, idx) { d.classList.toggle('active', idx === reelIndex); });
+    }
+    function startReel() {
+      if (!CONFIG.PLAY_REEL || kvList.length < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) { return; }
+      stopReel();
+      reelTimer = setInterval(function () { showKv(reelIndex + 1); }, CONFIG.KV_INTERVAL);
+    }
+    function stopReel() { if (reelTimer) { clearInterval(reelTimer); reelTimer = null; } }
+
+    if (kvList.length > 1) {
+      dots.forEach(function (d) {
+        d.addEventListener('click', function () {
+          showKv(parseInt(d.getAttribute('data-go'), 10) || 0);
+          startReel();
+        });
+      });
+      var hero = $('#hero');
+      if (hero) {
+        hero.addEventListener('mouseenter', stopReel);
+        hero.addEventListener('mouseleave', startReel);
+        var touchX = null;
+        hero.addEventListener('touchstart', function (ev) {
+          if (ev.touches && ev.touches[0]) { touchX = ev.touches[0].clientX; }
+        }, { passive: true });
+        hero.addEventListener('touchend', function (ev) {
+          if (touchX === null || !ev.changedTouches || !ev.changedTouches[0]) { return; }
+          var delta = ev.changedTouches[0].clientX - touchX;
+          if (Math.abs(delta) > 44) {
+            showKv(delta < 0 ? reelIndex + 1 : reelIndex - 1);
+            startReel();
+          }
+          touchX = null;
+        }, { passive: true });
+      }
+      startReel();
+    }
+  } catch (e) { console.warn('reel module skipped', e); }
+
+  /* ---------- 5. 倒计时（单一定时器 / 结束态 / 不出现负数） ---------- */
+  try {
+    var cdBody = $('#cdBody');
+    var cdDay = $('#cdDay');
+    var cdHour = $('#cdHour');
+    var cdMin = $('#cdMin');
+    var cdSec = $('#cdSec');
+    var cdTimer = null;
+
+    if (cdBody && cdDay && cdHour && cdMin && cdSec) {
+      var target = new Date(CONFIG.TARGET_TIME).getTime();
+      var tick = function () {
+        var diff = target - Date.now();
+        if (!isFinite(diff)) {
+          cdBody.innerHTML = '<div class="cd-cell"><div class="num">活动时间待定</div></div>';
+          return false;
+        }
+        if (diff <= 0) {
+          cdBody.classList.add('is-over');
+          cdBody.innerHTML = '<div class="cd-cell"><div class="num">活动已结束</div><div class="unit">ENDED</div></div>';
+          return false;
+        }
+        cdDay.textContent = pad(Math.floor(diff / 86400000));
+        cdHour.textContent = pad(Math.floor(diff / 3600000) % 24);
+        cdMin.textContent = pad(Math.floor(diff / 60000) % 60);
+        cdSec.textContent = pad(Math.floor(diff / 1000) % 60);
+        return true;
+      };
+      if (tick()) {
+        cdTimer = setInterval(function () {
+          if (!tick() && cdTimer) { clearInterval(cdTimer); cdTimer = null; }
+        }, 1000);
+      }
+      window.addEventListener('beforeunload', function () { if (cdTimer) { clearInterval(cdTimer); } });
+    }
+  } catch (e) { console.warn('countdown module skipped', e); }
+
+  /* ---------- 6. 背景音乐开关（首次交互解锁 / localStorage 记忆） ---------- */
+  try {
+    var musicBtn = $('#musicBtn');
+    var musicLabel = musicBtn ? $('.music-label', musicBtn) : null;
+    var bgm = null;
+    var unlocked = false;
+    var wantPlay = false;
+
+    try { wantPlay = localStorage.getItem('dn_bgm') === 'on'; } catch (err) { wantPlay = false; }
+
+    function ensureAudio() {
+      if (bgm || !CONFIG.AUDIO_SRC) { return bgm; }
+      bgm = new Audio();
+      bgm.loop = true;
+      bgm.preload = 'none';
+      bgm.src = CONFIG.AUDIO_SRC;
+      bgm.addEventListener('error', function () {
+        wantPlay = false;
+        setMusicState(false);
+        toast('背景音乐素材未就绪，已自动关闭（占位素材，上线前替换 assets/bgm.mp3）');
+      });
+      return bgm;
+    }
+    function setMusicState(on) {
+      if (!musicBtn) { return; }
+      musicBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      musicBtn.setAttribute('aria-label', on ? '关闭背景音乐' : '开启背景音乐');
+      if (musicLabel) { musicLabel.textContent = on ? 'MUSIC ON' : 'BGM'; }
+    }
+    function playMusic() {
+      var a = ensureAudio();
+      if (!a) { return; }
+      var p = a.play();
+      if (p && typeof p.catch === 'function') {
+        p.catch(function () {
+          wantPlay = false;
+          setMusicState(false);
+          toast('浏览器拦截了自动播放，请再次点击音乐开关');
+        });
+      }
+    }
+    function unlock() {
+      if (unlocked) { return; }
+      unlocked = true;
+      if (wantPlay) { playMusic(); }
+      document.removeEventListener('pointerdown', unlock);
+      document.removeEventListener('keydown', unlock);
+      window.removeEventListener('scroll', unlock);
+    }
+    if (musicBtn) {
+      setMusicState(false);
+      musicBtn.addEventListener('click', function () {
+        wantPlay = !wantPlay;
+        setMusicState(wantPlay);
+        try { localStorage.setItem('dn_bgm', wantPlay ? 'on' : 'off'); } catch (err) { /* 忽略存储失败 */ }
+        if (wantPlay) { playMusic(); }
+        else if (bgm) { bgm.pause(); }
+      });
+      document.addEventListener('pointerdown', unlock, { passive: true });
+      document.addEventListener('keydown', unlock);
+      window.addEventListener('scroll', unlock, { passive: true });
+    }
+  } catch (e) { console.warn('music module skipped', e); }
+
+  /* ---------- 7. 视频弹窗（打开注入 src / 关闭先 pause 再清空） ---------- */
+  try {
+    var modal = $('#videoModal');
+    var video = $('#cgVideo');
+    var fallback = $('#videoFallback');
+    var closeBtn = $('#modalClose');
+    var lastFocus = null;
+
+    function openModal() {
+      if (!modal) { return; }
+      lastFocus = document.activeElement;
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      if (video) {
+        if (!video.getAttribute('src') && CONFIG.VIDEO_SRC) {
+          video.setAttribute('src', CONFIG.VIDEO_SRC);
+          video.setAttribute('poster', '');
+        }
+        var p = video.play();
+        if (p && typeof p.catch === 'function') {
+          p.catch(function () { /* 等待用户点击播放控件，不视为错误 */ });
+        }
+      }
+      if (closeBtn) { closeBtn.focus(); }
+    }
+    function closeModal() {
+      if (!modal) { return; }
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (video) {
+        try { video.pause(); } catch (err) { /* 忽略 */ }
+        video.removeAttribute('src');
+        video.load();
+      }
+      if (fallback) { fallback.style.display = 'none'; }
+      if (lastFocus && typeof lastFocus.focus === 'function') { lastFocus.focus(); }
+    }
+    if (video) {
+      video.addEventListener('error', function () {
+        if (fallback) { fallback.style.display = 'flex'; }
+      });
+      video.addEventListener('playing', function () {
+        if (fallback) { fallback.style.display = 'none'; }
+      });
+    }
+    ['#heroPlay', '#expPlay'].forEach(function (sel) {
+      var trigger = $(sel);
+      if (trigger) { trigger.addEventListener('click', openModal); }
     });
-  }
+    if (closeBtn) { closeBtn.addEventListener('click', closeModal); }
+    if (modal) {
+      modal.addEventListener('click', function (ev) {
+        if (ev.target === modal) { closeModal(); }
+      });
+      document.addEventListener('keydown', function (ev) {
+        if (ev.key === 'Escape' && modal.classList.contains('open')) { closeModal(); }
+      });
+    }
+  } catch (e) { console.warn('video module skipped', e); }
+
+  /* ---------- 8. 演示态入口反馈 / 悬浮入口 ---------- */
+  try {
+    $all('[data-toast]').forEach(function (el) {
+      el.addEventListener('click', function () { toast(el.getAttribute('data-toast')); });
+    });
+    var dlBtn = $('#downloadBtn');
+    var dockDl = $('#dockDl');
+    function download() { toast('客户端下载入口已触发（演示页面，不接入真实下载链）'); }
+    if (dlBtn) { dlBtn.addEventListener('click', download); }
+    if (dockDl) { dockDl.addEventListener('click', download); }
+    var dockTop = $('#dockTop');
+    if (dockTop) {
+      dockTop.addEventListener('click', function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+  } catch (e) { console.warn('cta module skipped', e); }
 
 })();
 </script>
