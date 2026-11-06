@@ -4,17 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>《龙之谷》2026 夏季版本「疾风掠影 · 迎战飓风龙」| 版本介绍页</title>
-<meta name="description" content="《龙之谷》2026 夏季版本「疾风掠影 · 迎战飓风龙」演示介绍页：新职业「银色剑仙」、外传职业征名活动、新职业预约活动与新版本信息。本页面为演示用静态页，提交与验证为界面演示。">
+<meta name="description" content="《龙之谷》2026 夏季版本「疾风掠影 · 迎战飓风龙」演示介绍页：新职业「银色剑仙」、新版本信息与官方入口。本页面为演示用静态页。">
 <meta name="theme-color" content="#05060a">
 <meta name="color-scheme" content="dark">
-<link rel="preload" as="image" href="https://static.web.sdo.com/dn/pic/dn/web12/20261029/bg.jpg">
+<link rel="preload" as="image" href="assets/kv-bg-v3.webp" type="image/webp">
 <style>
 /* ============================================================
    《龙之谷》2026 夏季版本介绍页 — 单文件静态页（零构建 / 零第三方运行时）
    美术基准：https://dn.web.sdo.com/web12/ 暗色哥特奇幻风
-   结构：导航 → 主视觉 KV（官网同图）→ 新版本信息 → 活动入口+倒计时
-        → 新职业 → 征名活动 → 预约活动 → 关联入口 → 页脚
-   素材：官方静态 CDN 直引（static.web.sdo.com），失败走降级占位
+   结构：导航 → 主视觉 KV（仓库内去字成品图）→ 新版本信息 → 新职业 → 关联入口 → 页脚
+   素材：首屏背景为仓库内 assets/kv-bg-v3.png/.webp（已去字）；其余为新职业官方静态 CDN 直引，失败走降级占位
    ============================================================ */
 
 /* ---------- 设计令牌 ---------- */
@@ -265,71 +264,6 @@ ul{list-style:none}
 .v-link svg{width:15px;height:15px;flex:none}
 
 /* ============================================================
-   5. 活动入口 + 倒计时
-   ============================================================ */
-.activities{background:var(--bg-0)}
-.activity-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
-.activity-card{
-  position:relative;padding:36px 24px 30px;text-align:center;
-  background:var(--glass);
-  border:1px solid var(--line);
-  -webkit-backdrop-filter:blur(12px);
-  backdrop-filter:blur(12px);
-  transition:transform .45s cubic-bezier(.2,.7,.2,1),box-shadow .45s,border-color .45s;
-}
-@supports not ((-webkit-backdrop-filter:blur(12px)) or (backdrop-filter:blur(12px))){
-  .activity-card{background:#0c0b11}
-}
-.activity-card::before,.activity-card::after{
-  content:'';position:absolute;width:16px;height:16px;border:1px solid rgba(216,180,106,.6);transition:border-color .4s
-}
-.activity-card::before{top:8px;left:8px;border-right:none;border-bottom:none}
-.activity-card::after{bottom:8px;right:8px;border-left:none;border-top:none}
-.activity-card:hover{transform:translateY(-8px);border-color:var(--gold);box-shadow:0 20px 46px rgba(0,0,0,.62),0 0 30px rgba(216,180,106,.18)}
-.activity-card:hover::before,.activity-card:hover::after{border-color:var(--gold-hi)}
-.activity-card .badge{
-  position:absolute;top:-1px;right:18px;padding:5px 12px;font-size:11px;letter-spacing:.12em;
-  background:linear-gradient(180deg,var(--blood),#4d1109);color:#f4d9c8;
-  box-shadow:0 6px 18px rgba(125,31,18,.5)
-}
-.activity-card .ico{width:64px;height:64px;margin:6px auto 22px;display:flex;align-items:center;justify-content:center;position:relative}
-.activity-card .ico svg{width:40px;height:40px;color:var(--gold);filter:drop-shadow(0 0 10px rgba(216,180,106,.45))}
-.activity-card .ico::after{content:'';position:absolute;inset:0;border:1px solid rgba(216,180,106,.28);transform:rotate(45deg)}
-.activity-card h3{font-size:18.5px;font-weight:700;letter-spacing:.1em;color:var(--gold-hi);margin-bottom:8px}
-.activity-card .time{font-family:var(--serif);font-size:12.5px;letter-spacing:.14em;color:var(--gold);opacity:.9;margin-bottom:12px}
-.activity-card p{font-size:13.5px;color:var(--text-dim);line-height:1.85;min-height:76px}
-.activity-card .act-btn{
-  display:inline-flex;align-items:center;gap:8px;margin-top:8px;padding:10px 22px;
-  font-size:13px;letter-spacing:.14em;color:var(--gold);
-  border:1px solid rgba(216,180,106,.4);transition:all .35s;min-height:44px
-}
-.activity-card .act-btn:hover{color:#150f08;background:linear-gradient(180deg,#f7ecc4,#d8b46a);border-color:var(--gold-hi);box-shadow:0 0 24px rgba(216,180,106,.4)}
-
-/* 倒计时面板 */
-.countdown-panel{
-  margin-top:56px;padding:34px 40px;display:flex;align-items:center;justify-content:space-between;gap:36px;flex-wrap:wrap;
-  border:1px solid var(--line);
-  background:
-    radial-gradient(ellipse at 0% 50%,rgba(216,180,106,.1),transparent 55%),
-    var(--glass);
-  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
-  box-shadow:0 0 0 1px rgba(216,180,106,.08) inset,0 22px 50px rgba(0,0,0,.5)
-}
-@supports not ((-webkit-backdrop-filter:blur(12px)) or (backdrop-filter:blur(12px))){
-  .countdown-panel{background:#0c0b11}
-}
-.countdown-panel .cd-title{display:flex;flex-direction:column;gap:6px}
-.countdown-panel .cd-title .k{font-family:var(--serif);font-size:12px;letter-spacing:.3em;color:var(--gold)}
-.countdown-panel .cd-title .t{font-size:20px;font-weight:700;letter-spacing:.12em;color:var(--gold-hi)}
-.countdown-panel .cd-title .s{font-size:12.5px;color:var(--text-dim);letter-spacing:.08em}
-.countdown{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.cd-cell{min-width:84px;padding:12px 10px;text-align:center;border:1px solid rgba(216,180,106,.28);background:rgba(5,6,10,.55)}
-.cd-cell .num{font-family:var(--serif);font-size:34px;line-height:1.1;color:var(--gold-hi);text-shadow:0 0 16px rgba(216,180,106,.42)}
-.cd-cell .unit{font-size:11px;letter-spacing:.22em;color:var(--text-dim);margin-top:4px}
-.cd-sep{font-family:var(--serif);font-size:26px;color:var(--gold);opacity:.6;transform:translateY(-8px)}
-.countdown.is-over .cd-cell .num{font-size:22px;letter-spacing:.1em;color:var(--text-dim)}
-
-/* ============================================================
    6. 新职业「银色剑仙」
    ============================================================ */
 .newclass{background:linear-gradient(180deg,var(--bg-0) 0%,var(--bg-1) 50%,var(--bg-0) 100%);border-top:1px solid rgba(216,180,106,.1)}
@@ -369,95 +303,6 @@ ul{list-style:none}
 .skill-links{display:flex;gap:16px;flex-wrap:wrap;margin-top:22px}
 
 /* ============================================================
-   7. 外传职业征名活动
-   ============================================================ */
-.campaign{background:var(--bg-0);border-top:1px solid rgba(216,180,106,.1)}
-.info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
-.info-block{
-  padding:30px 32px;border:1px solid var(--line);background:var(--glass);
-  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)
-}
-@supports not ((-webkit-backdrop-filter:blur(12px)) or (backdrop-filter:blur(12px))){
-  .info-block{background:#0c0b11}
-}
-.info-block.wide{grid-column:1/-1}
-.info-block h3{font-size:16px;font-weight:700;letter-spacing:.12em;color:var(--gold-hi);margin-bottom:14px}
-.info-block h3 .en{font-family:var(--serif);font-size:11px;letter-spacing:.22em;color:var(--text-dim);margin-left:10px;font-weight:400}
-.info-block p{font-size:13.5px;line-height:1.95;color:var(--text-dim)}
-.info-block p+p{margin-top:10px}
-.rule-list{display:flex;flex-direction:column;gap:10px}
-.rule-list li{position:relative;padding-left:20px;font-size:13.5px;line-height:1.9;color:var(--text-dim)}
-.rule-list li::before{content:'';position:absolute;left:2px;top:9px;width:7px;height:7px;transform:rotate(45deg);border:1px solid rgba(216,180,106,.6)}
-.prize-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:6px}
-.prize{padding:18px 20px;border:1px solid rgba(216,180,106,.28);background:rgba(5,6,10,.55)}
-.prize .p-t{font-size:13px;letter-spacing:.1em;color:var(--gold);margin-bottom:8px}
-.prize ul{display:flex;flex-direction:column;gap:6px}
-.prize li{font-size:13px;color:var(--text);opacity:.88}
-.campaign-visual{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:32px}
-.campaign-visual img{width:100%;border:1px solid var(--line);background:#0a0b12}
-.campaign-actions{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:36px}
-
-/* ============================================================
-   8. 新职业预约活动
-   ============================================================ */
-.reserve{background:linear-gradient(180deg,var(--bg-0) 0%,var(--bg-1) 50%,var(--bg-0) 100%);border-top:1px solid rgba(216,180,106,.1)}
-.reserve-panel{
-  padding:40px 44px;border:1px solid var(--line);
-  background:
-    radial-gradient(ellipse at 50% 0%,rgba(216,180,106,.1),transparent 60%),
-    var(--glass);
-  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
-  box-shadow:0 22px 50px rgba(0,0,0,.5)
-}
-@supports not ((-webkit-backdrop-filter:blur(12px)) or (backdrop-filter:blur(12px))){
-  .reserve-panel{background:#0c0b11}
-}
-.reserve-top{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:18px}
-.reserve-count{font-family:var(--serif);font-size:clamp(30px,4.4vw,44px);line-height:1.1;color:var(--gold-hi);text-shadow:0 0 18px rgba(216,180,106,.36)}
-.reserve-count small{font-family:var(--sans);font-size:13px;letter-spacing:.14em;color:var(--text-dim);margin-left:8px}
-.reserve-top .t{font-size:14px;letter-spacing:.1em;color:var(--gold)}
-/* 进度条：官方 p3-speed.png 为底，CSS 变量控制填充宽度 */
-.progress{
-  --progress:0%;
-  position:relative;height:26px;border:1px solid rgba(216,180,106,.34);overflow:hidden;
-  background:rgba(5,6,10,.7);
-  box-shadow:0 0 0 1px rgba(216,180,106,.08) inset
-}
-.progress-bg{
-  position:absolute;inset:0;background-image:url("https://static.web.sdo.com/dn/pic/dn_26act/0625zm/pc-images/p3-speed.png");
-  background-size:100% 100%;background-repeat:no-repeat;opacity:.55
-}
-.progress-fill{
-  position:absolute;left:0;top:0;bottom:0;width:var(--progress);
-  background:linear-gradient(90deg,rgba(216,180,106,.35),#f2dfa9 70%,#fff);
-  box-shadow:0 0 18px rgba(216,180,106,.6);
-  transition:width .7s cubic-bezier(.2,.7,.2,1)
-}
-.milestones{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}
-.mile{
-  padding:14px 16px;text-align:center;border:1px solid rgba(216,180,106,.28);background:rgba(5,6,10,.5);
-  transition:border-color .35s,background .35s
-}
-.mile .m-t{font-family:var(--serif);font-size:13px;letter-spacing:.1em;color:var(--gold)}
-.mile .m-s{font-size:12px;letter-spacing:.08em;color:var(--text-dim);margin-top:4px}
-.mile.on{border-color:var(--gold-hi);background:rgba(216,180,106,.14)}
-.mile.on .m-s{color:var(--gold-hi)}
-.reserve-actions{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:30px}
-.account-box{
-  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
-  margin-top:22px;padding:16px 20px;border:1px dashed rgba(216,180,106,.36);background:rgba(5,6,10,.55)
-}
-.account-box .acc-name{font-size:13.5px;color:var(--gold-hi);letter-spacing:.08em}
-.account-box .acc-role{font-size:12.5px;color:var(--text-dim)}
-.account-box .acc-cancel{
-  margin-left:auto;padding:7px 16px;font-size:12px;letter-spacing:.1em;color:var(--text-dim);
-  border:1px solid var(--line);transition:all .3s;min-height:36px
-}
-.account-box .acc-cancel:hover{color:var(--gold-hi);border-color:var(--gold)}
-.tips{margin-top:30px;padding-top:24px;border-top:1px solid rgba(216,180,106,.16)}
-.tips .tips-t{font-size:13px;letter-spacing:.12em;color:var(--gold);margin-bottom:12px}
-
-/* ============================================================
    9. 关联入口
    ============================================================ */
 .related{background:var(--bg-0);border-top:1px solid rgba(216,180,106,.1);padding:80px 0}
@@ -474,7 +319,7 @@ ul{list-style:none}
 .related-card .u{font-family:var(--serif);font-size:12px;letter-spacing:.08em;color:var(--text-dim);word-break:break-all}
 
 /* ============================================================
-   10. 悬浮快捷入口
+   6. 悬浮快捷入口
    ============================================================ */
 .dock{position:fixed;right:22px;bottom:32px;z-index:90;display:flex;flex-direction:column;gap:10px}
 .dock button{
@@ -489,60 +334,7 @@ ul{list-style:none}
 .dock.show button{opacity:1;pointer-events:auto}
 
 /* ============================================================
-   11. 弹窗（遮罩复用：征名六步弹窗）
-   ============================================================ */
-.modal{
-  position:fixed;inset:0;z-index:200;display:none;
-  padding:24px;place-items:center;
-  background:rgba(3,4,7,.88);
-  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)
-}
-.modal.open{display:grid}
-.modal-close{
-  width:44px;height:44px;flex:none;display:flex;align-items:center;justify-content:center;
-  border:1px solid var(--line);color:var(--gold);background:rgba(8,8,12,.7);transition:all .3s
-}
-.modal-close:hover{border-color:var(--gold-hi);color:var(--gold-hi);box-shadow:var(--glow)}
-.name-pop{
-  position:relative;width:min(560px,100%);max-height:calc(100vh - 48px);overflow:auto;
-  border:1px solid var(--line);
-  background:linear-gradient(180deg,#121019 0%,#08090f 100%);
-  box-shadow:0 30px 80px rgba(0,0,0,.8),0 0 42px rgba(216,180,106,.14)
-}
-.name-pop-head{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:18px 20px;border-bottom:1px solid rgba(216,180,106,.16)}
-.name-pop-title{font-family:var(--serif);font-size:13px;letter-spacing:.2em;color:var(--gold)}
-.name-step{padding:26px 26px 30px}
-.np-progress{font-family:var(--serif);font-size:11.5px;letter-spacing:.18em;color:var(--text-dim);margin-bottom:14px}
-.np-title{margin-bottom:14px}
-.np-title img{width:min(320px,100%);height:auto;margin:0 auto}
-.np-h{font-size:19px;font-weight:700;letter-spacing:.1em;color:var(--gold-hi);margin-bottom:12px}
-.np-desc{font-size:13px;line-height:1.9;color:var(--text-dim);margin-bottom:20px}
-.np-field{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
-.np-field label{font-size:12.5px;letter-spacing:.12em;color:var(--gold)}
-.np-field input{
-  width:100%;height:46px;padding:0 14px;font-family:inherit;font-size:14px;letter-spacing:.06em;
-  color:var(--gold-hi);background:rgba(5,6,10,.7);border:1px solid rgba(216,180,106,.32);
-  transition:border-color .3s,box-shadow .3s;border-radius:0
-}
-.np-field input::placeholder{color:rgba(141,134,119,.8)}
-.np-field input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 1px rgba(216,180,106,.4),0 0 18px rgba(216,180,106,.16)}
-.np-field input[aria-invalid="true"]{border-color:#b5432c}
-.np-row{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:end}
-.np-err{min-height:20px;font-size:12.5px;letter-spacing:.06em;color:#e0896f;margin-bottom:14px}
-.np-note{font-size:12.5px;line-height:1.9;color:var(--text-dim);margin-bottom:18px}
-.np-echo{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
-.np-echo .e{display:flex;justify-content:space-between;gap:16px;padding:12px 16px;border:1px solid rgba(216,180,106,.26);background:rgba(5,6,10,.55);font-size:13.5px}
-.np-echo .e span{color:var(--text-dim);font-size:12.5px;letter-spacing:.1em}
-.np-echo .e b{color:var(--gold-hi);font-weight:400;letter-spacing:.1em}
-.np-warn{padding:12px 16px;border-left:2px solid rgba(216,180,106,.6);background:rgba(216,180,106,.06);font-size:13px;color:var(--gold);margin-bottom:20px}
-.np-actions{display:flex;gap:14px;flex-wrap:wrap}
-.np-actions .btn{padding:14px 30px;font-size:14px;min-height:46px}
-.np-qr{display:flex;flex-direction:column;gap:14px;align-items:center;margin-bottom:18px}
-.np-qr img{width:min(260px,100%);border:1px solid var(--line);background:#0a0b12}
-.np-tips{font-size:12.5px;line-height:1.9;color:var(--text-dim);margin-top:14px}
-
-/* ============================================================
-   12. 页脚
+   7. 页脚
    ============================================================ */
 .footer{background:#040508;border-top:1px solid rgba(216,180,106,.16);padding:52px 0 28px}
 .footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;padding-bottom:32px;border-bottom:1px solid rgba(216,180,106,.1)}
@@ -569,7 +361,6 @@ ul{list-style:none}
    响应式（1100 / 980 / 820 / 560）
    ============================================================ */
 @media(max-width:1100px){
-  .activity-grid{grid-template-columns:repeat(2,1fr)}
   .version-card{grid-template-columns:1fr}
   .version-side{border-left:none;border-top:1px solid var(--line)}
 }
@@ -582,24 +373,15 @@ ul{list-style:none}
   .nav .links.open a{padding:14px 0;width:100%;border-bottom:1px solid rgba(216,180,106,.08)}
   .nav .links.open a:last-child{border-bottom:none}
   .nav-burger{display:flex}
-  .countdown-panel{justify-content:center;text-align:center}
   .footer-top{flex-direction:column}
-  .info-grid{grid-template-columns:1fr}
   .related-grid{grid-template-columns:1fr}
-  .reserve-panel{padding:32px 26px}
 }
 @media(max-width:820px){
   .dock{right:14px;bottom:18px}
   .dock button{width:46px;height:46px}
-  .milestones{grid-template-columns:1fr}
 }
 @media(max-width:560px){
   .section{padding:74px 0}
-  .activity-grid{grid-template-columns:1fr}
-  .cd-cell{min-width:64px;padding:10px 6px}
-  .cd-cell .num{font-size:26px}
-  .cd-sep{font-size:20px}
-  .countdown{gap:8px}
   .hero .cta-group .btn{padding:14px 26px;font-size:13.5px;letter-spacing:.12em}
   .hero .period{font-size:11.5px;letter-spacing:.12em;padding:6px 14px}
   .hero-inner{padding:0 18px}
@@ -616,16 +398,9 @@ ul{list-style:none}
   }
   .shot{flex:0 0 78vw;scroll-snap-align:center}
   .class-copy{padding:24px 20px}
-  .prize-grid{grid-template-columns:1fr}
-  .campaign-visual{grid-template-columns:1fr}
-  .reserve-count{font-size:30px}
-  .reserve-actions .btn,.campaign-actions .btn{width:100%}
-  .np-row{grid-template-columns:1fr}
   .footer-bottom{flex-direction:column;gap:8px}
   .music-btn{padding:8px 10px;font-size:11px}
   .nav .brand .cn{font-size:19px}
-  .name-pop{width:100%}
-  .name-step{padding:20px 18px 24px}
 }
 /* 降低动效偏好 */
 @media(prefers-reduced-motion:reduce){
@@ -665,8 +440,6 @@ ul{list-style:none}
     <div class="links" id="navLinks">
       <a href="#version">新版本</a>
       <a href="#expansion">新职业</a>
-      <a href="#name">征名活动</a>
-      <a href="#reserve">预约活动</a>
       <a href="#dl">下载</a>
     </div>
 
@@ -683,11 +456,11 @@ ul{list-style:none}
 </nav>
 
 <!-- ============================================================
-     2. 主视觉 KV（官网 web12 同一张背景图 + 双 CTA）
+     2. 主视觉 KV（仓库内去字成品图 + 单 CTA）
      ============================================================ -->
 <header class="hero" id="hero">
   <div class="kv" id="kvLayer" aria-hidden="true">
-    <img class="kv-img" id="kvImg" src="https://static.web.sdo.com/dn/pic/dn/web12/20261029/bg.jpg"
+    <img class="kv-img" id="kvImg" src="assets/kv-bg-v3.webp"
          alt="" fetchpriority="high" decoding="async" width="1920" height="1080">
   </div>
   <div class="sparks" aria-hidden="true"></div>
@@ -697,13 +470,9 @@ ul{list-style:none}
     <h1>龙之谷</h1>
     <p class="activity-name">2026 夏季版本 <span>疾风掠影 · 迎战飓风龙</span></p>
     <p class="slogan">当飓风掠过大陆，银色剑仙踏雾而来 —— 浪客外传新职业 7 月 16 日登场，创角即升 90 级。</p>
-    <div class="period">活动时间 <b>2026.06.26 — 2026.07.31</b></div>
+    <div class="period">上线时间 <b>2026.07.16</b></div>
     <div class="cta-group">
-      <a href="#reserve" class="btn btn-gold">
-        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>
-        立即预约
-      </a>
-      <a href="#version" class="btn btn-outline">
+      <a href="#version" class="btn btn-gold">
         <svg class="ico" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M7 4h10a2 2 0 0 1 2 2v14l-7-3-7 3V6a2 2 0 0 1 2-2z" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>
         新版本信息
       </a>
@@ -732,7 +501,7 @@ ul{list-style:none}
         <ul class="v-points" id="vPoints">
           <li>浪客外传新职业「银色剑仙」登场</li>
           <li>创角即升 90 级</li>
-          <li>新职业预约与转职福利同步开放</li>
+          <li>转职福利同步开放</li>
         </ul>
       </div>
       <div class="version-side">
@@ -752,84 +521,7 @@ ul{list-style:none}
 </section>
 
 <!-- ============================================================
-     4. 活动入口 + 倒计时
-     ============================================================ -->
-<section class="section activities" id="activities">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div class="kicker">Event Entrance</div>
-      <h2>本期<span class="em">四大</span>版块</h2>
-      <p class="desc">新职业、外传职业征名、新职业预约与官方版本入口一屏直达，活动期 6 月 26 日至 7 月 31 日</p>
-    </div>
-
-    <div class="activity-grid">
-      <article class="activity-card reveal d1">
-        <span class="badge">NEW</span>
-        <div class="ico">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 20 12 3l6 17M9 14h6" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>
-        </div>
-        <h3>新职业 · 银色剑仙</h3>
-        <div class="time">07.16 登场</div>
-        <p>浪客外传新职业登场，国风形象与技能展示 6 图齐全，创角即升 90 级。</p>
-        <button class="act-btn" type="button" data-scroll="#expansion">查看新职业</button>
-      </article>
-
-      <article class="activity-card reveal d2">
-        <span class="badge">限时</span>
-        <div class="ico">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v13H4zM8 6V4h8v2M9 12h6" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>
-        </div>
-        <h3>外传职业征名</h3>
-        <div class="time">06.26 — 06.30</div>
-        <p>提交 1 个一转名 + 1 个二转名，无论是否采纳均有奖励，采纳奖含周年纪念周边。</p>
-        <button class="act-btn" type="button" data-name-open>参与征名</button>
-      </article>
-
-      <article class="activity-card reveal d3">
-        <span class="badge">每日</span>
-        <div class="ico">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M5 8l7-5 7 5M7 21h10" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>
-        </div>
-        <h3>新职业预约</h3>
-        <div class="time">06.26 — 07.31</div>
-        <p>预约解锁进度条，绑定完成二转的浪客外传角色即可领取里程碑奖励。</p>
-        <button class="act-btn" type="button" data-scroll="#reserve">立即预约</button>
-      </article>
-
-      <article class="activity-card reveal d4">
-        <span class="badge">官方</span>
-        <div class="ico">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v12H4zM8 21h8M12 17v4" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>
-        </div>
-        <h3>版本资讯</h3>
-        <div class="time">官网同步</div>
-        <p>版本新闻与同期活动页均指向官方站点，新窗口打开，信息以官网为准。</p>
-        <button class="act-btn" type="button" data-scroll="#related">查看入口</button>
-      </article>
-    </div>
-
-    <!-- 倒计时 -->
-    <div class="countdown-panel reveal" id="countdown">
-      <div class="cd-title">
-        <span class="k">Countdown</span>
-        <span class="t">活动结束倒计时</span>
-        <span class="s">疾风掠影 · 2026.07.31 23:59 结束</span>
-      </div>
-      <div class="countdown" id="cdBody" aria-live="polite">
-        <div class="cd-cell"><div class="num" id="cdDay">--</div><div class="unit">DAYS</div></div>
-        <span class="cd-sep" aria-hidden="true">:</span>
-        <div class="cd-cell"><div class="num" id="cdHour">--</div><div class="unit">HOURS</div></div>
-        <span class="cd-sep" aria-hidden="true">:</span>
-        <div class="cd-cell"><div class="num" id="cdMin">--</div><div class="unit">MINS</div></div>
-        <span class="cd-sep" aria-hidden="true">:</span>
-        <div class="cd-cell"><div class="num" id="cdSec">--</div><div class="unit">SECS</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     5. 新职业「银色剑仙」（2026Asc 搬运）
+     4. 新职业「银色剑仙」（2026Asc 搬运）
      ============================================================ -->
 <section class="section newclass" id="expansion">
   <div class="wrap">
@@ -873,159 +565,7 @@ ul{list-style:none}
 </section>
 
 <!-- ============================================================
-     6. 外传职业征名活动（2026Asc 搬运 + 六步弹窗）
-     ============================================================ -->
-<section class="section campaign" id="name">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div class="kicker">Name Campaign</div>
-      <h2>外传职业<span class="em">征名活动</span></h2>
-      <p class="desc">为浪客外传职业起名，活动结束后无论是否采纳均可获得奖励</p>
-    </div>
-
-    <div class="info-grid">
-      <div class="info-block reveal d1">
-        <h3>活动时间与范围<span class="en">WHEN</span></h3>
-        <p>活动时间：6 月 26 日 ~ 6 月 30 日</p>
-        <p>活动范围：正式服全区全服（账号内最多仅 1 个 100 级角色可参与）</p>
-      </div>
-
-      <div class="info-block reveal d2">
-        <h3>活动内容<span class="en">WHAT</span></h3>
-        <p>提交 1 个一转职业名 + 1 个二转职业名，活动结束后无论是否采纳均可获得奖励。</p>
-        <p>弹窗流程：征名弹窗（pop1）→ 确认提交（提示确认后不可更改）→ 提交成功（引导预约新职业，解锁坐骑、三件套等奖励）→ 手机号+验证码（pop4）→ 企微二维码关注（pop5）→「预约奖励已发送」（pop6）。</p>
-      </div>
-
-      <div class="info-block wide reveal d3">
-        <h3>奖池<span class="en">PRIZE</span></h3>
-        <div class="prize-grid">
-          <div class="prize">
-            <div class="p-t">参与奖</div>
-            <ul>
-              <li>水晶潘多拉礼盒（1 天）*10</li>
-              <li>疲劳恢复剂 1500（7 天）*5</li>
-            </ul>
-          </div>
-          <div class="prize">
-            <div class="p-t">采纳奖</div>
-            <ul>
-              <li>16 周年纪念 T 恤 *1</li>
-              <li>原画集（迷之大陆）*1</li>
-              <li>猎犬披风 *1</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="info-block wide reveal d4">
-        <h3>温馨提示<span class="en">NOTICE</span></h3>
-        <ul class="rule-list">
-          <li>同名创意先提交者得奖。</li>
-          <li>两个中文名均被采纳最多一份采纳奖。</li>
-          <li>无实际意义或非中文名不予发奖。</li>
-          <li>参与奖发至账号保管箱，7 月版本更新后建新角色领取。</li>
-          <li>采纳奖活动结束后 3 个工作日内官网公布并开放寄送信息填写，T 恤尺码随机。</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="campaign-visual reveal">
-      <img src="https://static.web.sdo.com/dn/pic/dn_26act/0625zm/pc-images/p2-tit.png" alt="外传职业征名活动标题图" loading="lazy" decoding="async" width="900" height="300">
-      <img src="https://static.web.sdo.com/dn/pic/dn_26act/0625zm/pc-images/p1-con.png" alt="外传职业征名活动说明图" loading="lazy" decoding="async" width="900" height="600">
-    </div>
-
-    <div class="campaign-actions reveal">
-      <button class="btn btn-gold" type="button" data-name-open>
-        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 20h4l10-10-4-4L4 16zM14 6l4 4" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
-        我要参加征名
-      </button>
-      <a class="btn btn-outline" href="#reserve">
-        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
-        预约新职业
-      </a>
-    </div>
-    <p class="np-note" style="text-align:center;margin-top:20px">征名提交、手机验证码与企微关注均为界面演示，不发起任何网络请求。</p>
-  </div>
-</section>
-
-<!-- ============================================================
-     7. 新职业预约活动（2026Asc 搬运 + 演示态进度与绑定）
-     ============================================================ -->
-<section class="section reserve" id="reserve">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div class="kicker">Reserve Campaign</div>
-      <h2>新职业<span class="em">预约活动</span></h2>
-      <p class="desc">预约解锁进度条，7 月 16 日版本更新后登录并绑定完成二转的浪客外传角色领取里程碑奖励</p>
-    </div>
-
-    <div class="reserve-panel reveal d1">
-      <div class="info-grid" style="margin-bottom:32px">
-        <div class="info-block reveal d1" style="padding:24px 26px">
-          <h3>活动时间与范围</h3>
-          <p>活动时间：6 月 26 日 ~ 7 月 31 日</p>
-          <p>活动范围：正式服全区全服</p>
-        </div>
-        <div class="info-block reveal d2" style="padding:24px 26px">
-          <h3>活动内容</h3>
-          <p>预约解锁进度条，展示当前预约人数；7 月 16 日版本更新后，用预约账号登录并绑定完成二转的浪客外传角色可领里程碑奖励。</p>
-          <p>7 月 14 日 23:59 前预约的账号，可在 16 周年庆典额外获得 1 次抽奖机会。</p>
-        </div>
-      </div>
-
-      <div class="reserve-top">
-        <div class="reserve-top t">当前预约人数</div>
-        <div class="reserve-count"><span id="reserveCount">0</span><small>人</small></div>
-      </div>
-
-      <div class="progress" id="progressWrap" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="新职业预约进度">
-        <div class="progress-bg" id="progressBg" aria-hidden="true"></div>
-        <div class="progress-fill" id="progressFill"></div>
-      </div>
-
-      <div class="milestones" id="milestones">
-        <div class="mile" data-threshold="50000">
-          <div class="m-t">5 万</div>
-          <div class="m-s" data-state>未解锁</div>
-        </div>
-        <div class="mile" data-threshold="100000">
-          <div class="m-t">10 万</div>
-          <div class="m-s" data-state>未解锁</div>
-        </div>
-        <div class="mile" data-threshold="150000">
-          <div class="m-t">15 万</div>
-          <div class="m-s" data-state>未解锁</div>
-        </div>
-      </div>
-
-      <div class="reserve-actions">
-        <button class="btn btn-gold" type="button" id="reserveBtn" aria-pressed="false">我要预约</button>
-        <span class="np-note" style="margin:0">预约仅保存本地演示状态，刷新后保留、清缓存可重置。</span>
-      </div>
-
-      <div class="account-box" id="accountBox" hidden>
-        <span class="acc-name" id="accName">演示账号</span>
-        <span class="acc-role" id="accRole">角色：浪客外传 · 演示角色</span>
-        <button class="acc-cancel" type="button" id="accCancel">注销</button>
-      </div>
-      <div class="account-box" id="accountHint">
-        <span class="acc-role">预约后可绑定角色领取里程碑奖励（演示页面，不接入真实账号体系）。</span>
-      </div>
-
-      <div class="tips">
-        <div class="tips-t">温馨提示</div>
-        <ul class="rule-list">
-          <li>7 月 16 日 15:00 后可用完成二转角色登录领奖，截止 7 月 31 日 23:59。</li>
-          <li>账号下仅 1 个角色可参与领奖。</li>
-          <li>预约奖励按预约总人数累积获得。</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     8. 关联入口（放在预约之后、页脚之前）
+     5. 关联入口（新职业之后、页脚之前）
      ============================================================ -->
 <section class="related" id="related">
   <div class="wrap">
@@ -1051,13 +591,9 @@ ul{list-style:none}
 </section>
 
 <!-- ============================================================
-     9. 悬浮快捷入口
+     6. 悬浮快捷入口
      ============================================================ -->
 <div class="dock" id="dock">
-  <button type="button" data-scroll="#reserve" aria-label="新职业预约">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M5 8l7-5 7 5M7 21h10" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>
-    预约
-  </button>
   <button type="button" id="dockDl" aria-label="下载客户端">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 11l5 5 5-5M4 20h16" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>
     下载
@@ -1069,22 +605,7 @@ ul{list-style:none}
 </div>
 
 <!-- ============================================================
-     10. 征名六步弹窗（单容器 + 步骤状态，内容由 JS 渲染）
-     ============================================================ -->
-<div class="modal" id="nameModal" role="dialog" aria-modal="true" aria-label="外传职业征名活动" aria-hidden="true">
-  <div class="name-pop">
-    <div class="name-pop-head">
-      <span class="name-pop-title">外传职业征名活动</span>
-      <button class="modal-close" id="nameClose" type="button" aria-label="关闭征名弹窗">
-        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 6l12 12M18 6l-12 12" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
-      </button>
-    </div>
-    <div class="name-step" id="nameStep"></div>
-  </div>
-</div>
-
-<!-- ============================================================
-     11. 页脚
+     7. 页脚
      ============================================================ -->
 <footer class="footer" id="dl">
   <div class="wrap">
@@ -1101,7 +622,7 @@ ul{list-style:none}
             <span class="en">DRAGON NEST</span>
           </span>
         </div>
-        <p class="about">《龙之谷》2026 夏季版本「疾风掠影 · 迎战飓风龙」演示介绍页。本页面为演示用静态页，活动时间、人数、奖励与实际活动可能存在差异，页面内提交与验证为界面演示，不代表官方正式活动。</p>
+        <p class="about">《龙之谷》2026 夏季版本「疾风掠影 · 迎战飓风龙」演示介绍页。本页面为演示用静态页，内容与官方正式页面可能存在差异。</p>
         <button class="v-link" id="downloadBtn" type="button" style="max-width:280px;margin-top:18px">
           下载客户端
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 11l5 5 5-5M4 20h16" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
@@ -1110,8 +631,6 @@ ul{list-style:none}
       <div class="footer-links">
         <a href="#version">新版本</a>
         <a href="#expansion">新职业</a>
-        <a href="#name">征名活动</a>
-        <a href="#reserve">预约活动</a>
         <a href="#hero">返回顶部</a>
       </div>
     </div>
@@ -1125,8 +644,8 @@ ul{list-style:none}
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <!-- ============================================================
-     JavaScript：配置 / 导航 / 淡入 / 版本信息 / 倒计时 / 音乐
-                  / 新职业渲染 / 征名弹窗 / 预约 / 演示态反馈
+     JavaScript：配置 / 导航 / 淡入 / 版本信息 / 音乐
+                  / 新职业渲染 / 演示态反馈
      ============================================================ -->
 <script>
 (function () {
@@ -1134,14 +653,14 @@ ul{list-style:none}
 
   /* ---------- 配置常量（运营改这一处即可） ---------- */
   var CONFIG = {
-    TARGET_TIME: '2026-07-31T23:59:59+08:00',
-    KV_IMAGE: 'https://static.web.sdo.com/dn/pic/dn/web12/20261029/bg.jpg',
+    KV_IMAGE: 'assets/kv-bg-v3.webp',
+    KV_FALLBACK: 'assets/kv-bg-v3.png',
     BGM_SRC: 'assets/bgm.mp3',
 
     VERSION: {
       name: '疾风掠影 · 迎战飓风龙',
       updateTime: '2026.07.16',
-      points: ['浪客外传新职业「银色剑仙」登场', '创角即升 90 级', '新职业预约与转职福利同步开放'],
+      points: ['浪客外传新职业「银色剑仙」登场', '创角即升 90 级', '转职福利同步开放'],
       newsUrl: 'https://dn.web.sdo.com/web12/news/newsContent.html?ID=389156&CategoryID=102',
       actUrl: 'https://dnact3.web.sdo.com/Pro2026/07jnh/'
     },
@@ -1150,24 +669,17 @@ ul{list-style:none}
       portrait: ['1.webp', '2.webp', '3.webp'],
       skill: ['6.webp', '7.webp', '8.webp'],
       base: 'https://static.web.sdo.com/dn/pic/dn_26act/07Ascendent/'
-    },
-
-    NAME_CAMPAIGN: { start: '2026-06-26', end: '2026-06-30', codeSeconds: 60 },
-    RESERVE: { count: 128000, milestones: [{ threshold: 50000 }, { threshold: 100000 }, { threshold: 150000 }] }
+    }
   };
-
-  var IMG_BASE_0625 = 'https://static.web.sdo.com/dn/pic/dn_26act/0625zm/pc-images/';
 
   /* ---------- 工具 ---------- */
   function $(sel, root) { return (root || document).querySelector(sel); }
   function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
-  function pad(n) { return n < 10 ? '0' + n : String(n); }
   function esc(s) {
     return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
     });
   }
-  function thousands(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
 
   function scrollToSection(sel) {
     var el = $(sel);
@@ -1242,16 +754,23 @@ ul{list-style:none}
     }
   } catch (e) { console.warn('reveal module skipped', e); }
 
-  /* ---------- 4. 首屏 KV（官网同图 + 失败回退） ---------- */
+  /* ---------- 4. 首屏 KV（仓库内去字成品图 + 两级降级） ---------- */
   try {
     var kvImg = $('#kvImg');
     var kvLayer = $('#kvLayer');
     if (kvImg && kvLayer) {
+      var kvTriedPng = false;
       if (!kvImg.getAttribute('src') && CONFIG.KV_IMAGE) { kvImg.setAttribute('src', CONFIG.KV_IMAGE); }
       kvImg.addEventListener('error', function () {
+        // 第一级：WebP 加载失败试 PNG 源图；第二级：都失败才回退渐变，不回退官网带字原图
+        if (!kvTriedPng && CONFIG.KV_FALLBACK) {
+          kvTriedPng = true;
+          kvImg.setAttribute('src', CONFIG.KV_FALLBACK);
+          return;
+        }
         kvLayer.classList.add('kv-failed');
         kvImg.style.display = 'none';
-        toast('官网 KV 背景加载失败，已回退渐变背景');
+        toast('首屏背景图加载失败，已回退渐变背景');
       });
     }
   } catch (e) { console.warn('kv module skipped', e); }
@@ -1304,44 +823,7 @@ ul{list-style:none}
     renderShots($('#skillGrid'), nc && nc.skill, '银色剑仙技能展示');
   } catch (e) { console.warn('newclass module skipped', e); }
 
-  /* ---------- 7. 倒计时（单一定时器 / 结束态 / 不出现负数） ---------- */
-  try {
-    var cdBody = $('#cdBody');
-    var cdDay = $('#cdDay');
-    var cdHour = $('#cdHour');
-    var cdMin = $('#cdMin');
-    var cdSec = $('#cdSec');
-    var cdTimer = null;
-
-    if (cdBody && cdDay && cdHour && cdMin && cdSec) {
-      var target = new Date(CONFIG.TARGET_TIME).getTime();
-      var tick = function () {
-        var diff = target - Date.now();
-        if (!isFinite(diff)) {
-          cdBody.innerHTML = '<div class="cd-cell"><div class="num">活动时间待定</div></div>';
-          return false;
-        }
-        if (diff <= 0) {
-          cdBody.classList.add('is-over');
-          cdBody.innerHTML = '<div class="cd-cell"><div class="num">活动已结束</div><div class="unit">ENDED</div></div>';
-          return false;
-        }
-        cdDay.textContent = pad(Math.floor(diff / 86400000));
-        cdHour.textContent = pad(Math.floor(diff / 3600000) % 24);
-        cdMin.textContent = pad(Math.floor(diff / 60000) % 60);
-        cdSec.textContent = pad(Math.floor(diff / 1000) % 60);
-        return true;
-      };
-      if (tick()) {
-        cdTimer = setInterval(function () {
-          if (!tick() && cdTimer) { clearInterval(cdTimer); cdTimer = null; }
-        }, 1000);
-      }
-      window.addEventListener('beforeunload', function () { if (cdTimer) { clearInterval(cdTimer); } });
-    }
-  } catch (e) { console.warn('countdown module skipped', e); }
-
-  /* ---------- 8. 背景音乐开关（首次交互解锁 / localStorage 记忆） ---------- */
+  /* ---------- 7. 背景音乐开关（首次交互解锁 / localStorage 记忆） ---------- */
   try {
     var musicBtn = $('#musicBtn');
     var musicLabel = musicBtn ? $('.music-label', musicBtn) : null;
@@ -1405,353 +887,7 @@ ul{list-style:none}
     }
   } catch (e) { console.warn('music module skipped', e); }
 
-  /* ---------- 9. 外传职业征名：单容器六步弹窗 ---------- */
-  try {
-    var nameModal = $('#nameModal');
-    var nameStep = $('#nameStep');
-    var nameClose = $('#nameClose');
-    var npLastFocus = null;
-    var npState = { step: 1, first: '', second: '', codeTimer: null, countdown: 0 };
-    var RE_CN = /^[\u4e00-\u9fa5]{2,6}$/;
-    var RE_PHONE = /^1\d{10}$/;
-    var RE_CODE = /^\d{6}$/;
-
-    function readSubmitted() {
-      try {
-        var raw = localStorage.getItem('dn_name_submit');
-        return raw ? JSON.parse(raw) : null;
-      } catch (err) { return null; }
-    }
-    function writeSubmitted(first, second) {
-      try {
-        localStorage.setItem('dn_name_submit', JSON.stringify({ first: first, second: second, at: Date.now() }));
-      } catch (err) { /* 忽略存储失败 */ }
-    }
-
-    function stepHeader() {
-      return '<div class="np-progress">STEP ' + npState.step + ' / 6</div>';
-    }
-    function tit(file, alt) {
-      return '<div class="np-title"><img src="' + IMG_BASE_0625 + file + '" alt="' + esc(alt) + '" loading="lazy" decoding="async"></div>';
-    }
-
-    function renderStep(n) {
-      if (!nameStep) { return; }
-      npState.step = n;
-      if (npState.codeTimer) { clearInterval(npState.codeTimer); npState.codeTimer = null; }
-      var html = '';
-
-      if (n === 1) {
-        html = stepHeader() + tit('pop1-tit.png', '征名活动')
-          + '<p class="np-desc">请为浪客外传职业起名：一转职业名与二转职业名各 1 个，均需 2–6 个汉字，不含数字与字母。</p>'
-          + '<div class="np-field"><label for="ncFirst">一转职业名</label>'
-          + '<input id="ncFirst" type="text" maxlength="6" autocomplete="off" placeholder="请输入 2–6 个汉字" value="' + esc(npState.first) + '"></div>'
-          + '<div class="np-field"><label for="ncSecond">二转职业名</label>'
-          + '<input id="ncSecond" type="text" maxlength="6" autocomplete="off" placeholder="请输入 2–6 个汉字" value="' + esc(npState.second) + '"></div>'
-          + '<p class="np-err" id="ncErr" role="alert"></p>'
-          + '<div class="np-actions"><button class="btn btn-gold" type="button" id="ncNext">下一步</button>'
-          + '<button class="btn btn-outline" type="button" id="ncCancel">取消</button></div>';
-      } else if (n === 2) {
-        html = stepHeader()
-          + '<h3 class="np-h">确认提交</h3>'
-          + '<div class="np-echo">'
-          + '<div class="e"><span>一转职业名</span><b>' + esc(npState.first) + '</b></div>'
-          + '<div class="e"><span>二转职业名</span><b>' + esc(npState.second) + '</b></div>'
-          + '</div>'
-          + '<p class="np-warn">确认提交后将无法再进行更改。</p>'
-          + '<div class="np-actions"><button class="btn btn-gold" type="button" id="ncSubmit">确认提交</button>'
-          + '<button class="btn btn-outline" type="button" id="ncBack">我再想想</button></div>';
-      } else if (n === 3) {
-        html = stepHeader() + '<h3 class="np-h">提交成功！</h3>'
-          + '<p class="np-desc">感谢您参与征名活动。点击预约新职业，解锁坐骑、三件套等奖励。</p>'
-          + '<div class="np-echo">'
-          + '<div class="e"><span>一转职业名</span><b>' + esc(npState.first) + '</b></div>'
-          + '<div class="e"><span>二转职业名</span><b>' + esc(npState.second) + '</b></div>'
-          + '</div>'
-          + '<p class="np-note">已提交的征名不可更改，再次打开弹窗会直接回到本步骤。</p>'
-          + '<div class="np-actions"><button class="btn btn-outline" type="button" id="ncGoReserve">点击预约新职业</button>'
-          + '<button class="btn btn-gold" type="button" id="ncNext">确认</button></div>';
-      } else if (n === 4) {
-        html = stepHeader() + tit('pop4-tit.png', '手机号验证')
-          + '<p class="np-desc">预约新职业需填写手机号并验证，演示页面不校验验证码真实值、也不发起请求。</p>'
-          + '<div class="np-field"><label for="ncPhone">手机号</label>'
-          + '<input id="ncPhone" type="tel" maxlength="11" inputmode="numeric" autocomplete="off" placeholder="请输入 11 位手机号"></div>'
-          + '<div class="np-field"><label for="ncCode">验证码</label>'
-          + '<div class="np-row"><input id="ncCode" type="text" maxlength="6" inputmode="numeric" autocomplete="off" placeholder="请输入 6 位验证码">'
-          + '<button class="btn btn-outline" type="button" id="ncSendCode">发送验证码</button></div></div>'
-          + '<p class="np-err" id="ncErr" role="alert"></p>'
-          + '<div class="np-actions"><button class="btn btn-gold" type="button" id="ncVerify">确认</button>'
-          + '<button class="btn btn-outline" type="button" id="ncSkip">暂不填写</button></div>';
-      } else if (n === 5) {
-        html = stepHeader() + '<div class="np-qr">'
-          + tit('pop5-tit.png', '关注企微')
-          + '<img src="' + IMG_BASE_0625 + 'pop5-code.png" alt="企微二维码" loading="lazy" decoding="async" width="260" height="260">'
-          + '</div>'
-          + '<p class="np-desc" style="text-align:center">更多福利请关注企微。</p>'
-          + '<div class="np-actions"><button class="btn btn-gold" type="button" id="ncNext">下一步</button></div>';
-      } else {
-        html = stepHeader() + tit('pop6-tit.png', '预约完成')
-          + '<h3 class="np-h">预约奖励已发送，请上线领取！</h3>'
-          + '<p class="np-desc">本页面为演示页面，未接入真实预约与奖励发放链路。</p>'
-          + '<div class="np-actions"><button class="btn btn-gold" type="button" id="ncDone">确认</button></div>';
-      }
-
-      nameStep.innerHTML = html;
-      bindStep(n);
-    }
-
-    function bindStep(n) {
-      var err = $('#ncErr');
-      function fail(msg, input) {
-        if (err) { err.textContent = msg; }
-        if (input) { input.setAttribute('aria-invalid', 'true'); input.focus(); }
-        return false;
-      }
-
-      if (n === 1) {
-        var first = $('#ncFirst');
-        var second = $('#ncSecond');
-        var next = $('#ncNext');
-        var cancel = $('#ncCancel');
-        if (first) { first.focus(); }
-        [first, second].forEach(function (el) {
-          if (el) { el.addEventListener('input', function () { el.setAttribute('aria-invalid', 'false'); if (err) { err.textContent = ''; } }); }
-        });
-        if (next) {
-          next.addEventListener('click', function () {
-            var f = first ? first.value.trim() : '';
-            var s = second ? second.value.trim() : '';
-            if (!f) { fail('请填写一转职业名', first); return; }
-            if (!RE_CN.test(f)) { fail('一转职业名需为 2–6 个汉字，不含数字与字母', first); return; }
-            if (!s) { fail('请填写二转职业名', second); return; }
-            if (!RE_CN.test(s)) { fail('二转职业名需为 2–6 个汉字，不含数字与字母', second); return; }
-            npState.first = f;
-            npState.second = s;
-            renderStep(2);
-          });
-        }
-        if (cancel) { cancel.addEventListener('click', closeNameModal); }
-      } else if (n === 2) {
-        var submit = $('#ncSubmit');
-        var back = $('#ncBack');
-        if (back) { back.addEventListener('click', function () { renderStep(1); }); }
-        if (submit) {
-          submit.focus();
-          submit.addEventListener('click', function () {
-            writeSubmitted(npState.first, npState.second);
-            renderStep(3);
-            toast('征名已提交（演示页面，未接入真实提交接口）');
-          });
-        }
-      } else if (n === 3) {
-        var goReserve = $('#ncGoReserve');
-        var next3 = $('#ncNext');
-        if (goReserve) {
-          goReserve.addEventListener('click', function () {
-            closeNameModal();
-            scrollToSection('#reserve');
-          });
-        }
-        if (next3) {
-          next3.focus();
-          next3.addEventListener('click', function () { renderStep(4); });
-        }
-      } else if (n === 4) {
-        var phone = $('#ncPhone');
-        var code = $('#ncCode');
-        var sendBtn = $('#ncSendCode');
-        var verifyBtn = $('#ncVerify');
-        var skipBtn = $('#ncSkip');
-        if (phone) { phone.focus(); }
-        if (sendBtn) {
-          sendBtn.addEventListener('click', function () {
-            var val = phone ? phone.value.trim() : '';
-            if (!RE_PHONE.test(val)) { fail('请输入 11 位手机号', phone); return; }
-            npState.countdown = (CONFIG.NAME_CAMPAIGN && CONFIG.NAME_CAMPAIGN.codeSeconds) || 60;
-            sendBtn.disabled = true;
-            sendBtn.classList.add('is-disabled');
-            if (err) { err.textContent = ''; }
-            sendBtn.textContent = npState.countdown + 's 后重发';
-            npState.codeTimer = setInterval(function () {
-              npState.countdown -= 1;
-              if (npState.countdown <= 0) {
-                clearInterval(npState.codeTimer);
-                npState.codeTimer = null;
-                sendBtn.disabled = false;
-                sendBtn.classList.remove('is-disabled');
-                sendBtn.textContent = '重新发送';
-                return;
-              }
-              sendBtn.textContent = npState.countdown + 's 后重发';
-            }, 1000);
-            toast('验证码已发送（演示页面，不发起真实短信）');
-          });
-        }
-        if (verifyBtn) {
-          verifyBtn.addEventListener('click', function () {
-            var p = phone ? phone.value.trim() : '';
-            var c = code ? code.value.trim() : '';
-            if (!RE_PHONE.test(p)) { fail('请输入 11 位手机号', phone); return; }
-            if (!RE_CODE.test(c)) { fail('请输入 6 位数字验证码', code); return; }
-            renderStep(5);
-          });
-        }
-        if (skipBtn) { skipBtn.addEventListener('click', function () { renderStep(5); }); }
-      } else if (n === 5) {
-        var next5 = $('#ncNext');
-        if (next5) {
-          next5.focus();
-          next5.addEventListener('click', function () { renderStep(6); });
-        }
-      } else {
-        var done = $('#ncDone');
-        if (done) {
-          done.focus();
-          done.addEventListener('click', function () {
-            closeNameModal();
-            toast('预约奖励已发送（演示页面，未接入真实发奖）');
-          });
-        }
-      }
-    }
-
-    function openNameModal() {
-      if (!nameModal) { return; }
-      npLastFocus = document.activeElement;
-      nameModal.classList.add('open');
-      nameModal.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-      var submitted = readSubmitted();
-      if (submitted && submitted.first && submitted.second) {
-        npState.first = submitted.first;
-        npState.second = submitted.second;
-        renderStep(3);
-        toast('你已提交过征名，名称不可更改');
-      } else {
-        npState.first = '';
-        npState.second = '';
-        renderStep(1);
-      }
-    }
-    function closeNameModal() {
-      if (!nameModal) { return; }
-      if (npState.codeTimer) { clearInterval(npState.codeTimer); npState.codeTimer = null; }
-      nameModal.classList.remove('open');
-      nameModal.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-      if (npLastFocus && typeof npLastFocus.focus === 'function') { npLastFocus.focus(); }
-    }
-
-    if (nameModal && nameStep) {
-      $all('[data-name-open]').forEach(function (el) {
-        el.addEventListener('click', openNameModal);
-      });
-      if (nameClose) { nameClose.addEventListener('click', closeNameModal); }
-      nameModal.addEventListener('click', function (ev) {
-        if (ev.target === nameModal) { closeNameModal(); }
-      });
-      document.addEventListener('keydown', function (ev) {
-        if (ev.key === 'Escape' && nameModal.classList.contains('open')) { closeNameModal(); }
-      });
-    }
-  } catch (e) { console.warn('name module skipped', e); }
-
-  /* ---------- 10. 新职业预约（进度条 / 里程碑 / 绑定与注销） ---------- */
-  try {
-    var reserveBtn = $('#reserveBtn');
-    var reserveCountEl = $('#reserveCount');
-    var progressWrap = $('#progressWrap');
-    var progressFill = $('#progressFill');
-    var progressBg = $('#progressBg');
-    var milestones = $all('#milestones .mile');
-    var accountBox = $('#accountBox');
-    var accountHint = $('#accountHint');
-    var accName = $('#accName');
-    var accCancel = $('#accCancel');
-
-    var reserveCfg = CONFIG.RESERVE || { count: 128000, milestones: [] };
-    var maxThreshold = 0;
-    (reserveCfg.milestones || []).forEach(function (m) {
-      if (m.threshold > maxThreshold) { maxThreshold = m.threshold; }
-    });
-    if (!maxThreshold) { maxThreshold = reserveCfg.count || 1; }
-
-    function readReserved() {
-      try { return localStorage.getItem('dn_reserved') === '1'; } catch (err) { return false; }
-    }
-    function setReserved(on) {
-      try {
-        if (on) { localStorage.setItem('dn_reserved', '1'); }
-        else { localStorage.removeItem('dn_reserved'); }
-      } catch (err) { /* 忽略存储失败 */ }
-    }
-
-    var reserved = readReserved();
-    var baseCount = reserveCfg.count || 0;
-    var total = baseCount + (reserved ? 1 : 0);
-
-    function renderReserve() {
-      total = baseCount + (reserved ? 1 : 0);
-      if (reserveCountEl) { reserveCountEl.textContent = thousands(total); }
-      var ratio = Math.max(0, Math.min(100, Math.round((total / maxThreshold) * 100)));
-      if (progressWrap) {
-        progressWrap.setAttribute('aria-valuenow', String(ratio));
-        progressWrap.setAttribute('aria-valuetext', thousands(total) + ' 人，' + ratio + '%');
-      }
-      if (progressFill) { progressFill.style.width = ratio + '%'; }
-      milestones.forEach(function (el) {
-        var th = parseInt(el.getAttribute('data-threshold'), 10) || 0;
-        var state = el.querySelector('[data-state]');
-        var on = total >= th;
-        el.classList.toggle('on', on);
-        if (state) { state.textContent = on ? '已解锁' : '未解锁'; }
-      });
-      if (reserveBtn) {
-        reserveBtn.textContent = reserved ? '我已预约' : '我要预约';
-        reserveBtn.setAttribute('aria-pressed', reserved ? 'true' : 'false');
-        reserveBtn.classList.toggle('is-disabled', reserved);
-      }
-      if (accountBox) { accountBox.hidden = !reserved; }
-      if (accountHint) { accountHint.hidden = reserved; }
-      if (accName && reserved) { accName.textContent = '演示账号'; }
-    }
-
-    renderReserve();
-
-    if (reserveBtn) {
-      reserveBtn.addEventListener('click', function () {
-        if (reserved) {
-          toast('你已预约，可在下方账号区注销后重新预约');
-          return;
-        }
-        reserved = true;
-        setReserved(true);
-        renderReserve();
-        toast('预约成功（演示页面，未接入真实预约接口）');
-      });
-    }
-    if (accCancel) {
-      accCancel.addEventListener('click', function () {
-        reserved = false;
-        setReserved(false);
-        renderReserve();
-        toast('已注销预约，可重新预约');
-      });
-    }
-    if (progressBg) {
-      progressBg.addEventListener('error', function () {
-        progressBg.style.display = 'none';
-      });
-    }
-    // 进度条底图为 background-image，加载失败时用 Image 探测后降级
-    try {
-      var probe = new Image();
-      probe.addEventListener('error', function () { if (progressBg) { progressBg.style.display = 'none'; } });
-      probe.src = IMG_BASE_0625 + 'p3-speed.png';
-    } catch (err) { /* 忽略 */ }
-  } catch (e) { console.warn('reserve module skipped', e); }
-
-  /* ---------- 11. 演示态入口反馈 / 悬浮入口 / 锚点滚动 ---------- */
+  /* ---------- 8. 演示态入口反馈 / 悬浮入口 / 锚点滚动 ---------- */
   try {
     $all('[data-toast]').forEach(function (el) {
       el.addEventListener('click', function () { toast(el.getAttribute('data-toast')); });
